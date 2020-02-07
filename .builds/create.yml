@@ -1,0 +1,15 @@
+image: archlinux
+packages:
+  - hugo
+secrets:
+  - daeb0d25-e9fc-4049-b292-08dde2b44829
+sources:
+  - git@git.sr.ht:~nykma/hugo
+tasks:
+  - build: |
+      cd hugo
+      git submodule update --init
+      hugo -D
+  - publish: |
+      cd hugo
+      ls -la public/
