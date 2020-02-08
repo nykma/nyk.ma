@@ -65,7 +65,7 @@ menu:
 
 
 params:
-  since: 2017
+  since: 2015
   dateFormatToUse: "2006-01-02"
   enablePostCopyright: false
   # the directory under content folder that you want to render
@@ -73,8 +73,9 @@ params:
   # Enable/Disable menu icons
   # Icon Reference: http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html
   enableMathJax: true #Enable mathjax support, to use mathematical notations
-  highlightjs:
-    langs: ["python", "javascript"] # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
+  # highlightjs:
+  #   langs: ["python", "javascript"]
+    # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
 
   # Allows you to specify an override stylesheet
   # put custom.css in $hugo_root_dir/static/

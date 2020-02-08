@@ -1,3 +1,6 @@
 [submodule "themes/hugo-theme-pure"]
 	path = themes/hugo-theme-pure
 	url = https://git.sr.ht/~nykma/hugo-theme-pure
+[submodule "themes/jane"]
+	path = themes/jane
+	url = git@git.sr.ht:~nykma/hugo-theme-jane
