@@ -1,10 +1,14 @@
 image: archlinux
 packages:
   - hugo
+  - rsync
 secrets:
   - daeb0d25-e9fc-4049-b292-08dde2b44829
+  - b70532da-36cc-4aff-a4e1-88c2145181aa
 sources:
   - git@git.sr.ht:~nykma/hugo
+environment:
+  remote_dir: /var/www/hugo/
 tasks:
   - build: |
       cd hugo
@@ -12,4 +16,4 @@ tasks:
       hugo -D
   - publish: |
       cd hugo
-      ls -la public/
+      rsync -az public/ remote:$remote_dir
