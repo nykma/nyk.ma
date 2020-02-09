@@ -4,8 +4,8 @@ author: ["Nyk Ma"]
 date: 2020-02-08T21:05:00+08:00
 lastmod: 2020-02-09T18:29:34+08:00
 tags: ["emacs"]
-categories: ["Tutorial"]
-draft: false
+categories: ["tutorial"]
+draft: true
 ---
 
 恭喜你决定尝试或常驻一个 **程序语言运行时兼文本编辑器** 。

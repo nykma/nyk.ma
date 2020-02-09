@@ -5,7 +5,7 @@ date: 2020-02-08T16:47:00+08:00
 lastmod: 2020-02-08T23:34:17+08:00
 tags: ["emacs"]
 categories: ["Tutorial"]
-draft: false
+draft: true
 ---
 
 > 建议你在阅读本文前先通读一遍 [Emacs 101 新手求生指南](https://github.com/emacs-tw/emacs-101-beginner-survival-guide) 。
