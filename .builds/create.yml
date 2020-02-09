@@ -13,7 +13,7 @@ tasks:
   - build: |
       cd hugo
       git submodule update --init
-      hugo -D
+      hugo --gc --minify
   - publish: |
       cd hugo
       sshopts="ssh -o StrictHostKeyChecking=no"
