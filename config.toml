@@ -86,7 +86,7 @@ name = "Nyk Ma"
 
 [params]
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
-  since = "2015"            # Site creation time          # 站点建立时间
+  since = "2013"            # Site creation time          # 站点建立时间
   homeFullContent = true   # if false, show post summaries on home page. Othewise show full content.
   rssFullContent = true     # if false, Rss feed instead of the summary
   mainSections = ["homepage"]
