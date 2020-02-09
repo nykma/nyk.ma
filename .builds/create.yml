@@ -17,4 +17,4 @@ tasks:
   - publish: |
       cd hugo
       sshopts="ssh -o StrictHostKeyChecking=no"
-      rsync --rsh="$sshopts" -a public/ remote:$remote_dir
+      rsync --rsh="$sshopts" -a --delete public/ remote:$remote_dir

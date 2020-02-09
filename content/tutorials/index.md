@@ -2,7 +2,7 @@
 title: "Emacs 自力求生指南"
 author: ["Nyk Ma"]
 date: 2020-02-08T21:05:00+08:00
-lastmod: 2020-02-09T14:21:52+08:00
+lastmod: 2020-02-09T18:29:34+08:00
 tags: ["emacs"]
 categories: ["Tutorial"]
 draft: false

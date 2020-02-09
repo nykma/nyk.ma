@@ -1,6 +1,7 @@
 ---
 title: "Emacs 自力求生指南 ── 理解基本概念"
 author: ["Nyk Ma"]
+type: "tutorial"
 date: 2020-02-08T23:02:00+08:00
 lastmod: 2020-02-08T23:50:49+08:00
 tags: ["emacs"]
