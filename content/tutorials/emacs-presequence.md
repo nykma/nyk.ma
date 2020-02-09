@@ -2,31 +2,13 @@
 title: "Emacs 自力求生指南 ── 前言"
 author: ["Nyk Ma"]
 date: 2020-02-08T16:47:00+08:00
-lastmod: 2020-02-08T18:31:51+08:00
+lastmod: 2020-02-08T23:34:17+08:00
 tags: ["emacs"]
 categories: ["Tutorial"]
 draft: false
 ---
 
-恭喜你决定尝试或常驻一个 **函数式语言运行时兼文本编辑器** 。
-
 > 建议你在阅读本文前先通读一遍 [Emacs 101 新手求生指南](https://github.com/emacs-tw/emacs-101-beginner-survival-guide) 。
-
-<!--quoteend-->
-
-> 下文使用的按键表达法：
->
-> `C-x C-s`
-> : 按下 Ctrl，按 x，按 s，松开 Ctrl[^fn:1]
->
-> `C-c C-e l o`
-> : 按下 Ctrl，按 c，按 e，松开 Ctrl，按 l，按 o[^fn:2]
->
-> `C-M-b`
-> : 按下 Ctrl 和 Alt (Meta)，按 b，松开 Ctrl 和 Alt[^fn:3]
->
-> `C-h P org RET`
-> : `Ctrl+h` ，然后按大写 `P` （ `Shift + p` ），然后打入 `org` ，回车[^fn:4]
 
 
 ## <span class="section-num">1</span> Emacs 是编辑器？ {#emacs-是编辑器}
@@ -34,7 +16,7 @@ draft: false
 呃……既是，也不是。就我理解， Emacs 是一个长得像文本编辑器的 [REPL](https://zh.wikipedia.org/wiki/REPL) ：
 
 -   它是 `Elisp` —— 一个纯函数式语言 —— 的运行时。
--   每次你打开 Emacs ，它都会使用一个干净的[^fn:5]运行时跑一遍 `~/.emacs.d/init.el` 脚本。[^fn:6]
+-   每次你打开 Emacs ，它都会使用一个干净的[^fn:1]运行时跑一遍 `~/.emacs.d/init.el` 脚本。[^fn:2]
 -   你所看到的窗口、文字、状态栏、光标等，均为上述脚本产生的 **副作用** 。
 
 
@@ -45,7 +27,7 @@ draft: false
 
 ### <span class="section-num">2.1</span> 学习成本高 {#学习成本高}
 
-一个黑 Emacs 比较上档次一点的角度[^fn:7]是「为了一个编辑器要学习一个新语言」。的确，想要随心所欲地使用 Emacs 的话，不可避免地需要用 Elisp 深度定制。
+一个黑 Emacs 比较上档次一点的角度[^fn:3]是「为了一个编辑器要学习一个新语言」。的确，想要随心所欲地使用 Emacs 的话，不可避免地需要用 Elisp 深度定制。
 
 推荐参考书是 [ANSI Common Lisp 指南](http://acl.readthedocs.io/en/latest/index.html) 。
 
@@ -64,14 +46,14 @@ draft: false
 -   org-mode 里的 export to PDF
 -   开一个大图片预览 Buffer 或打开一个 PDF
 
-    > 惊人的事实： Emacs 通过把 PDF 转成图片来预览。所以如果你对一个上百 M 的大 PDF 做缩放操作会十分酸爽……
+> 惊人的事实： Emacs 通过把 PDF 转成图片来预览。所以如果你对一个上百 M 的大 PDF 做缩放操作会十分酸爽……
 
 没有一个工具是万能的，甚至 Emacs 也是。如果你觉得有个功能 Emacs 干得不够好，那就立刻换一个工具吧。时间宝贵。
 
 
 ### <span class="section-num">2.3</span> 不够轻量，导致默认装机量不够 {#不够轻量-导致默认装机量不够}
 
-这个是真的没办法了… `vi` （不是 `vim` ）几乎是每个服务器 Linux 的标配，但 Emacs 的基础包实在太大[^fn:8]，甚至不少桌面版 Linux 都不会预装它。
+这个是真的没办法了… `vi` （不是 `vim` ）几乎是每个服务器 Linux 的标配，但 Emacs 的基础包实在太大[^fn:4]，甚至不少桌面版 Linux 都不会预装它。
 
 不过 macOS 居然预装了它，难道帮主爱用？
 
@@ -83,7 +65,7 @@ draft: false
 
 奇怪的是没几个 Emacs 介绍文提到这个的：Emacs 鼓励你使用它的 GUI 模式。
 
--   无参数启动 `emacs` 就是 GUI[^fn:9]
+-   无参数启动 `emacs` 就是 GUI[^fn:5]
 -   自带了可深度自定义的 Menu 和 Toolbar
     -   大部分常用功能都能在菜单栏里找到，甚至还能显示当前快捷键组合。前期我建议你不要关掉菜单栏，找个功能还是相当方便的……
 -   鼠标的框选、滚轮、双击、右键菜单等操作和你的使用习惯一致
@@ -94,9 +76,9 @@ draft: false
 
 ### <span class="section-num">3.2</span> 天生支持 C/S 模式 {#天生支持-c-s-模式}
 
-你肯定有过想在打开两个 vim 进程间互通剪贴板或光标互相跳转的场景，遗憾的是，不能。[^fn:10]
+你肯定有过想在打开两个 vim 进程间互通剪贴板或光标互相跳转的场景，遗憾的是，不能。[^fn:6]
 
-Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client 能随时连接它[^fn:11]。
+Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client 能随时连接它[^fn:7]。
 
 
 ### <span class="section-num">3.3</span> 文档又多又全还易读 {#文档又多又全还易读}
@@ -144,7 +126,7 @@ Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client �
 
 将光标向左移动一格，你会用 `C-b` 。我现在想写一个函数，让我能一次向前移动三格。
 
-模拟击键 `C-b` 三次吗？不够鲁棒，万一有用户把它绑定到其它功能了怎么办。[^fn:12]
+模拟击键 `C-b` 三次吗？不够鲁棒，万一有用户把它绑定到其它功能了怎么办。[^fn:8]
 
 那么我怎么精确定义这个函数呢？
 
@@ -159,7 +141,7 @@ Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client �
       (interactive)                 ;; 该函数可被 M-x 调用或绑定快捷键
       (backward-char 3))
     ```
-5.  在 `*scratch*` Buffer 里粘贴这一段[^fn:13]，把光标移到最后一个括号的后面，按 `C-x C-e` （ `(eval-last-sexp)` ），你会看到状态栏里出现了一个 `my/backward-3-chars` ，说明 defun 成功了[^fn:14]。
+5.  在 `*scratch*` Buffer 里粘贴这一段[^fn:9]，把光标移到最后一个括号的后面，按 `C-x C-e` （ `(eval-last-sexp)` ），你会看到状态栏里出现了一个 `my/backward-3-chars` ，说明 defun 成功了[^fn:10]。
 6.  试试在 `M-x` 里调用 `my/backward-3-chars` ，works as expected.
 7.  不妨把它绑定到一个快捷键上？
 
@@ -168,17 +150,13 @@ Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client �
     ```
 8.  把这些代码放到我的配置里，就能每次打开 Emacs 自动生效啦。
 
-[^fn:1]: 保存当前 Buffer
-[^fn:2]: 将当前 org 文件导出为 PDF
-[^fn:3]: 光标跳转到上一个表达式
-[^fn:4]: 显示软件包 `org` 的信息（如版本号、软件源、依赖关系、描述等）
-[^fn:5]: 其实带了一些 Emacs 预设的默认值。比如没有 `~/.emacs.d/init.el` 文件时 Emacs 也依然能生成一个窗口来。
-[^fn:6]: Emacs 28 之后变成 `$XDG_CONFIG_HOME/emacs/init.el` 了，一般是 `~/.config/emacs/init.el`
-[^fn:7]: 「不上档次的角度」是「快捷键太多」、「打开速度慢」之类的。事实上，当 Emacs 工作在 `daemon` 模式时，打开 client 只会比冷启动一个同等重量级的 vim 快。当然，「同等重量级」是个伪命题，哈哈（
-[^fn:8]: 如果精简太多就会让 Emacs 失去太多功能，最后变成跟 `nano` 差不多的存在……
-[^fn:9]: 也有 CLI 模式： `emacs -nw`
-[^fn:10]: neovim 在 C/S 模式上做了不少努力，その努力を認めよう。
-[^fn:11]: 具体参考 `emacsclient --help` 和 `C-h i m Emacs server` 。简单地说，启动服务器是 `emacs --daemon` ，启动客户端是 `emacsclient`
-[^fn:12]: 虽然不太可能，但因为 Emacs 什么都能做，所以如果真的有人这么干了，也请不要奇怪： Because he can.
-[^fn:13]: 如果你用 Emacs 打开 org 格式的本文的话，你可以直接把光标放在 `BEGIN_SRC` 和 `END_SRC` 内按 `C-c C-c` ，这段会自动执行，并将结果追加到这个代码块后面。
-[^fn:14]: 状态栏里的显示是 `(defun)` 函数的求值结果：一个名叫 `my/backward-3-chars` 的 Symbol。如果你在 `(+ 1 2)` 的后面按 `C-x C-e` ，你会看到求值结果 `3` 。
+[^fn:1]: 其实带了一些 Emacs 预设的默认值。比如没有 `~/.emacs.d/init.el` 文件时 Emacs 也依然能生成一个窗口来。
+[^fn:2]: Emacs 28 之后变成 `$XDG_CONFIG_HOME/emacs/init.el` 了，一般是 `~/.config/emacs/init.el`
+[^fn:3]: 「不上档次的角度」是「快捷键太多」、「打开速度慢」之类的。事实上，当 Emacs 工作在 `daemon` 模式时，打开 client 只会比冷启动一个同等重量级的 vim 快。当然，「同等重量级」是个伪命题，哈哈（
+[^fn:4]: 如果精简太多就会让 Emacs 失去太多功能，最后变成跟 `nano` 差不多的存在……
+[^fn:5]: 也有 CLI 模式： `emacs -nw`
+[^fn:6]: neovim 在 C/S 模式上做了不少努力，その努力を認めよう。
+[^fn:7]: 具体参考 `emacsclient --help` 和 `C-h i m Emacs server` 。简单地说，启动服务器是 `emacs --daemon` ，启动客户端是 `emacsclient`
+[^fn:8]: 虽然不太可能，但因为 Emacs 什么都能做，所以如果真的有人这么干了，也请不要奇怪： Because he can.
+[^fn:9]: 如果你用 Emacs 打开 org 格式的本文的话，你可以直接把光标放在 `BEGIN_SRC` 和 `END_SRC` 内按 `C-c C-c` ，这段会自动执行，并将结果追加到这个代码块后面。
+[^fn:10]: 状态栏里的显示是 `(defun)` 函数的求值结果：一个名叫 `my/backward-3-chars` 的 Symbol。如果你在 `(+ 1 2)` 的后面按 `C-x C-e` ，你会看到求值结果 `3` 。
