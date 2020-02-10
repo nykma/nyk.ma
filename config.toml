@@ -70,11 +70,11 @@ name = "Nyk Ma"
   weight = 25
   identifier = "categories"
   url = "/categories/"
-# [[menu.main]]
-#   name = "Tutorials"
-#   weight = 30
-#   identifier = "tutorials"
-#   url = "/tutorials/"
+[[menu.main]]
+  name = "Tutorials"
+  weight = 30
+  identifier = "tutorials"
+  url = "/tutorials/"
 [[menu.main]]
   name = "Keyboard"
   weight = 50
