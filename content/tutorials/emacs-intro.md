@@ -2,7 +2,7 @@
 title: "Emacs 自力求生指南 ── 前言"
 author: ["Nyk Ma"]
 date: 2020-02-10T18:28:00+08:00
-lastmod: 2020-02-11T12:17:58+08:00
+lastmod: 2020-02-11T16:45:51+08:00
 tags: ["emacs"]
 categories: ["tutorial"]
 draft: false
@@ -59,6 +59,17 @@ draft: false
 这个是真的没办法了… `vi` （不是 `vim` ）几乎是每个服务器 Linux 的标配，但 Emacs 的基础包实在太大[^fn:4]，甚至不少桌面版 Linux 都不会预装它。
 
 不过 macOS 居然预装了它，难道帮主爱用？
+
+
+### <span class="section-num">2.4</span> 前后端互动麻烦 {#前后端互动麻烦}
+
+Emacs 作为前端与后端进程通信的场景（比如 LSP），在极端情况下，性能不理想。
+
+后端 burst 大量数据时可能会卡死 Emacs ，比如后端一次性给了太多的补全建议。
+
+如果写 Emacs 的外部动态库，弹性就不够。
+
+这个
 
 
 ## <span class="section-num">3</span> 长处？ {#长处}

@@ -2,7 +2,7 @@
 title: "Emacs 自力求生指南"
 author: ["Nyk Ma"]
 date: 2020-02-10T18:31:00+08:00
-lastmod: 2020-02-10T18:32:20+08:00
+lastmod: 2020-02-11T16:45:57+08:00
 tags: ["emacs"]
 categories: ["tutorial"]
 draft: false
@@ -22,9 +22,9 @@ draft: false
 陈芝麻烂谷子的编辑器笑话并不好玩，扔到垃圾桶里吧。
 
 
-### <span class="section-num">1.1</span> 外一则：Emacs 生态现状 {#外一则-emacs-生态现状}
+### <span class="section-num">1.1</span> [外一则：Emacs 生态现状]({{< relref "emacs-2020-status" >}}) {#外一则-emacs-生态现状--tutorials-emacs-2020-status-dot-md}
 
-建议你在阅读本文前先通读一遍 [Emacs 101 新手求生指南](https://github.com/emacs-tw/emacs-101-beginner-survival-guide) 。
+建议你在继续阅读本文前先通读一遍 [Emacs 101 新手求生指南](https://github.com/emacs-tw/emacs-101-beginner-survival-guide) 。
 
 这篇系列文章是我看过的第一个把 emacs 的本质讲清楚的教程，是我入坑最大的勇气来源，也是我写这个系列的初衷。
 
