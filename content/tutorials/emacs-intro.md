@@ -2,13 +2,15 @@
 title: "Emacs 自力求生指南 ── 前言"
 author: ["Nyk Ma"]
 date: 2020-02-10T18:28:00+08:00
-lastmod: 2020-02-10T18:34:01+08:00
+lastmod: 2020-02-11T12:17:58+08:00
 tags: ["emacs"]
 categories: ["tutorial"]
 draft: false
 ---
 
 ## <span class="section-num">1</span> Emacs 是什么？ {#emacs-是什么}
+
+{{< figure src="/ox-hugo/深度截图_st_20200211121730.png" link="/ox-hugo/深度截图_st_20200211121730.png" >}}
 
 就我理解， Emacs 是一个长得像文本编辑器的 [REPL](https://zh.wikipedia.org/wiki/REPL) ：
 
@@ -68,11 +70,17 @@ draft: false
 
 -   你在写文档 (`org-mode`) ，文档里需要插入一段 C 。org-mode 提供一个函数，把这段嵌入代码映射到一个新的子窗口。你可以在这个子窗口里享受所有编辑 C 项目时你所使用的工具和环境，比如代码补全(LSP 和
     `company-mode`)、预定义的代码片段（ `yasnippet` ）、语法查错（ `flycheck` ）等。
+
+    {{< figure src="/ox-hugo/深度截图_st_20200211115954.png" link="/ox-hugo/深度截图_st_20200211115954.png" >}}
 -   用 [helm grep](https://github.com/emacs-helm/helm/wiki/Grep) 可以搜索整个 Project ，搜索结果呈现在一个 Buffer
     里。你可以[直接修改这个 Buffer 并「保存」](https://github.com/mhayashi1120/Emacs-wgrep)。同样，修改过程中你可以使用所有你早已熟悉的文本处理工具和流程，比如可视化正则文本处理器 `anzu` 、多光标 `multiple-cursors.el` ，甚至临时写个
     elisp 函数并当场执行也可以。
+
+    {{< figure src="/ox-hugo/深度截图_st_20200211120332.png" link="/ox-hugo/深度截图_st_20200211120332.png" >}}
 -   Emacs 自带的 `dired` 是一个文件浏览器。同样，你可以在它的
-    buffer 里「[直接修改并保存](https://masteringemacs.org/article/wdired-editable-dired-buffers)」。从此批量更名再也不用找额外的软件或者记额外的命令。
+    buffer 里「[直接修改并保存](https://masteringemacs.org/article/wdired-editable-dired-buffers)」。从此批量更名再也不用找额外的软件或者记额外的命令。注意图中右下角的 `Editable` 。
+
+    {{< figure src="/ox-hugo/深度截图_st_20200211120500.png" link="/ox-hugo/深度截图_st_20200211120500.png" >}}
 -   `eval-expression` （默认 `M-:` ） 可以把最底下一行（minibuffer）变成一个临时的 Elisp REPL，这里你可以执行任何 Elisp 函数，结果也会回显在里面。哪怕这个输入框只有一行高度，你会发现编辑体验和编辑一个 `.el` 文件是一致的：都有括号配平、都有函数名补完、一样能使用片段展开，甚至还能继续用 `C-x C-e` 来「临时执行表达式的一部分」。
 
     > 这一行的可订制性和大 buffer 是一模一样的，很多软件，诸如 [ivy](https://github.com/abo-abo/swiper%20) 或者 [smex](https://github.com/nonsequitur/smex) ，都把这一行玩出了花。
@@ -186,26 +194,35 @@ Clojure 、写 Elm 是非常非常享受的事情，心智负担和操作负担�
 -   看图、浏览网页、刷 Telegram 、预览 Markdown 等场景几乎只有在 GUI 内才 make sense
 
 
-### <span class="section-num">3.4</span> 天生支持 C/S 模式 {#天生支持-c-s-模式}
+### <span class="section-num">3.4</span> 内置官方唯一指定软件包管理器 {#内置官方唯一指定软件包管理器}
+
+还是可视化的。可以直接点击 Install 按钮安装。
+
+{{< figure src="/ox-hugo/深度截图_选择区域_20200211114334.png" link="/ox-hugo/深度截图_选择区域_20200211114334.png" >}}
+
+
+### <span class="section-num">3.5</span> 天生支持 C/S 模式 {#天生支持-c-s-模式}
 
 你肯定有过想在打开两个 vim 进程间互通剪贴板或光标互相跳转的场景，遗憾的是，不能。[^fn:7]
 
-Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client 能随时连接它[^fn:8]。
+Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client 能随时连接它[^fn:8]，还能主动抢占焦点。
 
 
-### <span class="section-num">3.5</span> 文档又多又全还易读 {#文档又多又全还易读}
+### <span class="section-num">3.6</span> 文档又多又全还易读 {#文档又多又全还易读}
 
 `M-x info` 里的文档每一篇都可以拿来当小说读。
 
+{{< figure src="/ox-hugo/深度截图_选择区域_20200211115617.png" link="/ox-hugo/深度截图_选择区域_20200211115617.png" >}}
 
-### <span class="section-num">3.6</span> 随时 Hack ，彻底 Hack {#随时-hack-彻底-hack}
+
+### <span class="section-num">3.7</span> 随时 Hack ，彻底 Hack {#随时-hack-彻底-hack}
 
 所有可见元素和变化都是 **执行函数** 所带来的副作用，所以你对编辑器的改造几乎没有场所和功能限制。
 
 来几个例子体验一下 Emacs 的可定制性吧。这些例子很糙，接下来几章会更加系统。
 
 
-#### <span class="section-num">3.6.1</span> 自己造一个简单的 Vim 按键模式 {#自己造一个简单的-vim-按键模式}
+#### <span class="section-num">3.7.1</span> 自己造一个简单的 Vim 按键模式 {#自己造一个简单的-vim-按键模式}
 
 在 Emacs 中，「按 `j` ，一个字母 `j` 出现在 Buffer 里」也是 **函数调用带来的副作用** ！
 
@@ -234,7 +251,7 @@ Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client �
 > 事实上，Emacs 的 `evil-mode` 是我用过的最接近 vim 原生的 vim style 实现。
 
 
-#### <span class="section-num">3.6.2</span> 自定义自己的副作用函数 {#自定义自己的副作用函数}
+#### <span class="section-num">3.7.2</span> 自定义自己的副作用函数 {#自定义自己的副作用函数}
 
 将光标向左移动一格，你会用 `C-b` 。我现在想写一个函数，让我能一次向前移动三格。
 
