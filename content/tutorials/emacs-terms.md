@@ -2,7 +2,7 @@
 title: "Emacs 自力求生指南 ── 基本概念"
 author: ["Nyk Ma"]
 date: 2020-02-12T18:20:00+08:00
-lastmod: 2020-02-12T20:35:40+08:00
+lastmod: 2020-02-12T21:09:03+08:00
 tags: ["emacs"]
 categories: ["tutorial"]
 draft: false
@@ -42,7 +42,7 @@ buffer 比杀进程还爽。
 </summary>
 <p class="details">
 
-我刚从 Emacs 切到 vim 的时候，有一点极其痛苦：似乎 Emacs 不鼓励你分割 window。
+我刚从 vim 切到 Emacs 的时候，有一点极其痛苦：似乎 Emacs 不鼓励你分割 window。
 
 三年后的现在，我大概理解为什么了：因为 Emacs 不需要频繁地分割
 window ，它的工作流不是这样的。
