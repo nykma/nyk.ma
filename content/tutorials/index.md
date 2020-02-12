@@ -2,7 +2,7 @@
 title: "Emacs 自力求生指南"
 author: ["Nyk Ma"]
 date: 2020-02-10T18:31:00+08:00
-lastmod: 2020-02-11T16:45:57+08:00
+lastmod: 2020-02-12T18:21:07+08:00
 tags: ["emacs"]
 categories: ["tutorial"]
 draft: false
@@ -33,7 +33,7 @@ draft: false
 我以此为切入，梳理一下 2020 年的今天 Emacs 软件环境的现状。看完本文你就能知道 Emacs 能不能胜任你的日常工作了。
 
 
-## <span class="org-todo todo TODO">TODO</span> <span class="section-num">2</span> 基本概念 {#基本概念}
+## <span class="section-num">2</span> [基本概念]({{< relref "emacs-terms#buffer-window-和-frame" >}}) {#基本概念--tutorials-emacs-terms-dot-md}
 
 先对齐术语，才能正确地提问题和搜问题。
 
