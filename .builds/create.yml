@@ -14,6 +14,7 @@ tasks:
       cd hugo
       git submodule update --init
       hugo --gc --minify
+      hugo --gc --minify
   - publish: |
       cd hugo
       sshopts="ssh -o StrictHostKeyChecking=no"

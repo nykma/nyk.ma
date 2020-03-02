@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南"
 author = ["Nyk Ma"]
 date = 2020-02-10T18:31:00+08:00
-lastmod = 2020-03-03T03:21:49+08:00
+lastmod = 2020-03-03T03:24:16+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
