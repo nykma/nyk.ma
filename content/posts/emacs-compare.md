@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 外一则：与编辑器的对比"
 author = ["Nyk Ma"]
 date = 2020-03-03T03:18:00+08:00
-lastmod = 2020-03-03T03:21:46+08:00
+lastmod = 2020-03-06T17:19:53+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -49,20 +49,92 @@ invalid 的值，启动时会报错，之类的。
 
 <details>
 <summary>
-程序编辑器和其它软件产品是不一样的！
+代码编辑器和其它软件产品是不一样的！
 </summary>
 <p class="details">
 
-编辑器作者、插件作者和用户都是程序员，大家都是朋友，为什么要互相使绊子呢？为什么还要用做产品的思路做程序编辑器呢？为什么编辑器要用配置文件这种有限暴露自己接口的方式来“防”着自己的用户？为什么编辑器要用 API 这种有限暴露自己接口的方式来“防”着插件作者？如果你踢过上文的桌脚，你会理解我在说什么。
+编辑器作者、插件作者和用户都是程序员，大家都是朋友，为什么要互相使绊子呢？为什么还要用做产品的思路做代码编辑器呢？为什么编辑器要用配置文件这种有限暴露自己接口的方式来“防”着自己的用户？为什么编辑器要用 API 这种有限暴露自己接口的方式来“防”着插件作者？如果你踢过上文的桌脚，你会理解我在说什么。
 </p>
 </details>
 
-那怎么解决呢？其实几十年前，软件工程上就解决了：你把上文的“插件”换成“依赖”，“配置”换成“程序”，一切都不是问题了。
+那怎么解决呢？几十年前就解决了，叫软件工程：你把上文的“插件”换成“依赖”，“配置”换成“程序”，一切都不是问题了。
 
 在 Emacs 里，你安装的不是低于编辑器一等的“插件”，而是你的项目所必需的“依赖”；你写的不是低人一等的“配置”，是和其它“依赖”（甚至大多数
 Emacs 内部代码）地位齐平的“程序”。
 
 所有 Elisp 代码都运行在同一个运行时里，不分出处，互相完全透明。有人说 Emacs 是一个能“自己修改自己”的编辑器。
+
+<details>
+<summary>
+Emacs 怎么处理这些问题的？
+</summary>
+<p class="details">
+
+-   运行时动态生成值
+
+    你写的“配置”实际上为 Elisp 程序，比如
+
+    ```elisp
+    ;; ~/.emacs.d/init.el
+    ;; setq: 设置全局变量的值
+    (setq lsp-java-java-path
+      (executable-find "java"))
+    ```
+
+-   自定义行为
+
+    Elisp 可以给任意函数“包”一个洋葱 proxy ，这个功能叫 advice，它可以让你在不拆开或者重定义原函数的情况下修改一个函数的行为，而原函数完全无感。举个例子：
+
+    ```elisp
+    (defun nema-add-number (a b)
+      "把 A 和 B 相加，很简单的函数"
+      (+ a b))
+
+    ;; 函数名无所谓，它比原函数多一个参数 orig-fn 表示原函数
+    (defun advice@nema-add-number (orig-fn a b)
+      (let* ((result (funcall orig-fn (+ 1 a) (* 2 b)))) ;; 修改传入原始函数的参数再 call
+        (message (format "A, B, result: %i, %i, %i" a b result))
+        result))
+
+    ;; 把新函数包在原函数外面
+    (advice-add 'nema-add-number :around 'advice@nema-add-number)
+
+    ;; 现在 call 原函数会让 advice 生效
+
+    (nema-add-number 1 2)
+    ;; 上面的调用返回变成了 6
+    ;; 并且 *Messages* 里多了 log ： A, B, result: 1, 2, 6
+    ```
+
+-   pick 一个插件提供的功能
+
+    其实就是选择性调用插件定义的函数。比如 [elixir-mode](https://github.com/elixir-editors/emacs-elixir) 提供了一个格式化代码的函数 `(elixir-format)` ，但它何时被调用完全取决于你。官方有一个 sample ，每次保存文件时都 format：
+
+    ```elisp
+    ;; ~/.emacs.d/init.el
+    ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
+    ;; 用 C-h f 和 C-h v 查看各个函数及变量的意义
+    (add-hook 'elixir-mode-hook
+              (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+    ```
+
+    那比如如果我想精细点，只想针对以 `.model.ex` 结尾的文件开启自动
+    format 呢？
+
+    ```elisp
+    ;; ~/.emacs.d/init.el
+    ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
+    (add-hook 'elixir-mode-hook
+              (lambda ()
+                (if (string-match "\\.model\\.ex$" (buffer-name))
+                    (add-hook 'before-save-hook 'elixir-format nil t))))
+    ```
+
+-   三方平等
+
+    所有 Elisp 代码都是平等的。Emacs 主要代码 [80% 是 Elisp](https://github.com/emacs-mirror/emacs)，插件和你的配置也都是 Elisp。所有 Elisp 在同一个运行时下，互相完全透明。你可以任意组合 Emacs 自带函数、插件 A 的函数、插件 B 的函数和你自己写的函数。
+</p>
+</details>
 
 呼，铺垫完了,终于可以进入正题了。
 
