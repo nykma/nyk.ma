@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 外一则：与编辑器的对比"
 author = ["Nyk Ma"]
 date = 2020-03-03T03:18:00+08:00
-lastmod = 2020-03-06T17:40:28+08:00
+lastmod = 2020-03-06T18:11:25+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -37,7 +37,7 @@ invalid 的值，启动时会报错，之类的。
 
     有个插件提供了 ABC 三个功能，我只想要 A 和 C ，因为 B 没有另一个插件做得好。
 
-    呃……只能 fork 了么…还要通读别人的代码，好头疼啊…
+    还是只能 fork 么……
 
 -   甚至连插件也不是自由的
 
@@ -108,7 +108,9 @@ Emacs 怎么处理这些问题的？
 
 -   pick 一个插件提供的功能
 
-    其实就是选择性调用插件定义的函数。比如 [elixir-mode](https://github.com/elixir-editors/emacs-elixir) 提供了一个格式化代码的函数 `(elixir-format)` ，但它何时被调用完全取决于你。官方有一个 sample ，每次保存文件时都 format：
+    `(require)` 一个插件一般只是引入一批函数，要想用它改变环境还得调用它。比如 [elixir-mode](https://github.com/elixir-editors/emacs-elixir) 提供了一个格式化代码的方法
+    `(elixir-format)` ，但它何时被调用完全取决于你。官方有一个
+    sample ，每次保存文件时都 format：
 
     ```elisp
     ;; ~/.emacs.d/init.el
@@ -118,8 +120,8 @@ Emacs 怎么处理这些问题的？
               (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
     ```
 
-    那比如如果我想精细点，只想针对以 `.model.ex` 结尾的文件开启自动
-    format 呢？
+    在此基础上，如果精细点，只针对以 `.model.ex` 结尾的文件开启自动
+     format 呢？
 
     ```elisp
     ;; ~/.emacs.d/init.el
@@ -130,13 +132,15 @@ Emacs 怎么处理这些问题的？
                     (add-hook 'before-save-hook 'elixir-format nil t))))
     ```
 
+    或者不用任何自动流程，我偶尔手动调用一下就够了： `M-x elixir-format RET`
+
 -   三方平等
 
-    所有 Elisp 代码都是平等的。Emacs 主要代码 [80% 是 Elisp](https://github.com/emacs-mirror/emacs)，插件和你的配置也都是 Elisp。所有 Elisp 在同一个运行时下，互相完全透明[^fn:1]。你可以任意组合 Emacs 自带函数、插件 A 的函数、插件 B 的函数和你自己写的函数。
+    所有 Elisp 代码都是平等的。Emacs 主要代码 [80% 是 Elisp](https://github.com/emacs-mirror/emacs)&nbsp;[^fn:1]，插件和你的配置也都是 Elisp。所有 Elisp 在同一个运行时下，互相完全透明[^fn:2]。你可以任意组合 Emacs 自带函数、插件 A 的函数、插件 B 的函数和你自己写的函数。
 </p>
 </details>
 
-呼，铺垫完了,终于可以进入正题了。
+呼，铺垫完了，终于可以进入正题了。
 
 等等，似乎也没几个编辑器值得提一提了？
 
@@ -150,9 +154,9 @@ Emacs 怎么处理这些问题的？
 
 ## <span class="section-num">2</span> Vim {#vim}
 
-我整个上文其实是用来说明 Vim 和 Emacs 的“定位不同”的。
+整个上文其实是用来说明 Vim 和 Emacs 的“定位不同”的。
 
-Vimscript 一开始根本就不能算是一个 script ，就是一种配置文件 DSL。要不是 Vim 用户对定制化的需求日益强烈，这配置文件格式根本不需要“进化”成为现在这种四不像“语言”……
+Vimscript 一开始根本不能算是一个 script ，只是一种配置文件 DSL。要不是 Vim 用户对定制化的需求日益强烈，这配置文件格式根本不需要“进化”成为现在这种四不像“语言”。上一个硬着头皮“进化”的例子是 php。
 
 我就说一个，Vimscript 直到 08 年的 7.2 版才支持浮点数。浮点数连语言 feature 都算不上吧…？
 
@@ -166,8 +170,10 @@ Vimscript 一开始根本就不能算是一个 script ，就是一种配置文�
 Atom 并没有并 VSCode 更加开放，性能还比 Code 差，直接抬出场外。
 
 
-## <span class="section-num">4</span> JetBrains 全家桶 {#jetbrains-全家桶}
+## <span class="section-num">4</span> Android Studio / XCode / VS {#android-studio-xcode-vs}
 
-这个甚至不是编辑器的比拼，拼的其实是工具链。
+这个甚至不是编辑器的比拼，拼的是工具链。UI Designer / instrument /
+可视化 debugger 之类的，没得选，反而不用纠结。
 
-[^fn:1]: Elisp 没有 private / public 一说。只要不是在 `(let)` 闭包里定义的东西，都是 public 的。插件里的“内部函数”你也可以直接调用或 advice，只要你清楚你在做什么…
+[^fn:1]: C 和 elisp 的比例大概是 1:4
+[^fn:2]: Elisp 没有 private / public 一说。只要不是在 `(let)` 闭包里定义的东西，都是 public 的。插件里的“内部函数”你也可以直接调用或 advice，只要你清楚你在做什么…
