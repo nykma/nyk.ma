@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 外一则：与编辑器的对比"
 author = ["Nyk Ma"]
 date = 2020-03-03T03:18:00+08:00
-lastmod = 2020-03-06T17:19:53+08:00
+lastmod = 2020-03-06T17:40:28+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -132,7 +132,7 @@ Emacs 怎么处理这些问题的？
 
 -   三方平等
 
-    所有 Elisp 代码都是平等的。Emacs 主要代码 [80% 是 Elisp](https://github.com/emacs-mirror/emacs)，插件和你的配置也都是 Elisp。所有 Elisp 在同一个运行时下，互相完全透明。你可以任意组合 Emacs 自带函数、插件 A 的函数、插件 B 的函数和你自己写的函数。
+    所有 Elisp 代码都是平等的。Emacs 主要代码 [80% 是 Elisp](https://github.com/emacs-mirror/emacs)，插件和你的配置也都是 Elisp。所有 Elisp 在同一个运行时下，互相完全透明[^fn:1]。你可以任意组合 Emacs 自带函数、插件 A 的函数、插件 B 的函数和你自己写的函数。
 </p>
 </details>
 
@@ -169,3 +169,5 @@ Atom 并没有并 VSCode 更加开放，性能还比 Code 差，直接抬出场�
 ## <span class="section-num">4</span> JetBrains 全家桶 {#jetbrains-全家桶}
 
 这个甚至不是编辑器的比拼，拼的其实是工具链。
+
+[^fn:1]: Elisp 没有 private / public 一说。只要不是在 `(let)` 闭包里定义的东西，都是 public 的。插件里的“内部函数”你也可以直接调用或 advice，只要你清楚你在做什么…
