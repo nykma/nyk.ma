@@ -27,16 +27,16 @@ unsafe = true # Make ox-hugo happy
 
 # Enable author pages
 [taxonomies]
-#  author = "author"
-#  tag = "tags"
-  category = "categories"
+  # author = "author"
+tag = "tags"
+category = "categories"
 
 # multilingual support example
 
-[languages.en]
-languageCode = "en"
-title = "Nayuki's Archive"
-weight = 2
+# [languages.en]
+# languageCode = "en"
+# title = "Nayuki's Archive"
+# weight = 2
 [languages.zh-cn]
 languageCode = "zh-cn"
 title = "Nayuki's Archive"
@@ -97,7 +97,7 @@ name = "Nyk Ma"
   description = "Nayuki's Archive"
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
-  archive-paginate = 10
+  archive-paginate = 20
 
   # paginate style, default use numbered pagination links
   # if true, use original "Previous" and "Next" links.
