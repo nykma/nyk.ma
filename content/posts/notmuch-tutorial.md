@@ -2,7 +2,7 @@
 title = "notmuch 及周边工具配置指南"
 author = ["Nyk Ma <i@nyk.ma>"]
 date = 2020-05-07
-lastmod = 2020-05-07T15:51:30+08:00
+lastmod = 2020-05-07T16:00:26+08:00
 tags = ["mail"]
 categories = ["tutorial"]
 draft = false
@@ -496,6 +496,20 @@ alice/Sent = 'NOT tag:sent':alice/INBOX
     -   GPG 签名 `M-x mml-secure-message-sign-pgpmime`
     -   发送 `C-c C-c`
     -   撤销 `C-c C-k`
+
+
+### 我的日常使用流程 {#我的日常使用流程}
+
+1.  移动邮件、与服务器同步、新邮件建立数据库： `afew -m; mbsync -a; notmuch new`
+
+    > 因为上文已经给 `notmuch new` 加了 hook ，这里不需要再 `afew -tn` 了。
+    > 其实 `mbsync -a` 和 `afew -m` 环节都可以放到 notmuch 的 hook 里
+
+2.  在 emacs 里读、写、回、改标签
+3.  再次执行 1，把改动写回服务器
+
+把上面的配置文件（和 GPG 加密的密码文件）备份下来，换个新系统就可以直接
+`mbsync -a; notmuch new` 开始工作了。
 
 
 ## FAQ {#faq}
