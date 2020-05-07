@@ -2,7 +2,7 @@
 title = "notmuch 及周边工具配置指南"
 author = ["Nyk Ma <i@nyk.ma>"]
 date = 2020-05-07
-lastmod = 2020-05-07T15:28:12+08:00
+lastmod = 2020-05-07T15:51:30+08:00
 tags = ["mail"]
 categories = ["tutorial"]
 draft = false
@@ -346,7 +346,7 @@ notmuch 注重建立 / 刷新数据库的速度。对我而言，上万封邮件
 # 邮件所在文件夹是什么名字，就打上什么 tag
 [FolderNameFilter]
 # 子文件夹分隔符： /
-# github/receipt 会被打上两个Tag： +my +receipt
+# github/receipt 会被打上两个Tag： +github +receipt
 maildir_separator = /
 # 以下文件夹不加 tag
 folder_blacklist = Archive INBOX
