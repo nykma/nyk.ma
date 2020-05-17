@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南"
 author = ["Nyk Ma"]
 date = 2020-02-10T18:31:00+08:00
-lastmod = 2020-03-03T03:24:16+08:00
+lastmod = 2020-05-17T15:42:24+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -13,14 +13,14 @@ draft = false
 市面上太多太多的 Emacs 指南，起手就教你快捷键。不应该是这样的。
 
 
-## <span class="section-num">1</span> [前言]({{< relref "emacs-intro" >}}) {#前言--tutorials-emacs-intro-dot-md}
+## <span class="section-num">1</span> [前言]({{< relref "emacs-intro" >}}) {#前言--posts-emacs-intro-dot-md}
 
 树立思考模式，破除 stereotype。
 
 陈芝麻烂谷子的编辑器笑话并不好玩，扔到垃圾桶里吧。
 
 
-### <span class="section-num">1.1</span> [外一则：与编辑器的对比]({{< relref "emacs-compare" >}}) {#外一则-与编辑器的对比--tutorials-emacs-compare-dot-md}
+### <span class="section-num">1.1</span> [外一则：与编辑器的对比]({{< relref "emacs-compare" >}}) {#外一则-与编辑器的对比--posts-emacs-compare-dot-md}
 
 不是“与 **其它** 编辑器的对比”，因为 Emacs 不是编辑器。你会把
 Python 和 vim 放一起比较哪个“好用”吗？
@@ -28,7 +28,7 @@ Python 和 vim 放一起比较哪个“好用”吗？
 无奈 Emacs 实在长得太像一个编辑器了，那就勉为其难地关公战秦琼一下吧…
 
 
-### <span class="section-num">1.2</span> [外一则：Emacs 生态现状]({{< relref "emacs-2020-status" >}}) {#外一则-emacs-生态现状--tutorials-emacs-2020-status-dot-md}
+### <span class="section-num">1.2</span> [外一则：Emacs 生态现状]({{< relref "emacs-2020-status" >}}) {#外一则-emacs-生态现状--posts-emacs-2020-status-dot-md}
 
 建议你在继续阅读本文前先通读一遍 [Emacs 101 新手求生指南](https://github.com/emacs-tw/emacs-101-beginner-survival-guide) 。
 
@@ -39,12 +39,17 @@ Python 和 vim 放一起比较哪个“好用”吗？
 我以此为切入，梳理一下 2020 年的今天 Emacs 软件环境的现状。看完本文你就能知道 Emacs 能不能胜任你的日常工作了。
 
 
-## <span class="section-num">2</span> [基本概念]({{< relref "emacs-terms" >}}) {#基本概念--tutorials-emacs-terms-dot-md}
+## <span class="section-num">2</span> [基本概念]({{< relref "emacs-terms" >}}) {#基本概念--posts-emacs-terms-dot-md}
 
 先对齐术语，才能正确地提问题和搜问题。
 
 
-## <span class="org-todo todo TODO">TODO</span> <span class="section-num">3</span> 初识 Elisp {#初识-elisp}
+### <span class="org-todo todo TODO">TODO</span> <span class="section-num">2.1</span> 外一则：我要不要使用别人的配置 {#外一则-我要不要使用别人的配置}
+
+TLDR：可以，但这编辑器不属于你了。
+
+
+## <span class="section-num">3</span> [初识 Elisp]({{< relref "emacs-elisp" >}}) {#初识-elisp--posts-emacs-elisp-dot-md}
 
 别怕。
 
