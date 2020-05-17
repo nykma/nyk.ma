@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 初识 Elisp"
 author = ["Nyk Ma"]
 date = 2020-05-17T14:44:00+08:00
-lastmod = 2020-05-17T15:40:01+08:00
+lastmod = 2020-05-17T15:49:36+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -146,19 +146,13 @@ abc 这个 symbol 定义一个函数，所以第二行报错了；求值是递�
 ## <span class="section-num">2</span> 常用调试命令、快捷键、流程、资料表 {#常用调试命令-快捷键-流程-资料表}
 
 `C-x C-e` (`eval-last-sexp`)
-: 最常用的调试方法。由于 Lisp
-    递归求值的特性，你可以通过移动光标，从内向外逐级调试。
+: 最常用的调试方法。由于 Lisp 递归求值的特性，你可以通过移动光标，从内向外逐级调试。
 
-(message "abc")
+`(message "abc")`
 : 在 `*Messages*` buffer 里留下信息，也就是 `printf` 或者 `console.log()`
 
 `(toggle-debug-on-error)`
-: 在异常发生时自动弹出调用栈。注意它
-
-是 toggle 。
-
-[基于函数入口的调试法](https://emacs-china.org/t/emacs/11777)
-: 在函数被 call 时自动弹出调用栈
+: 在异常发生时自动弹出调用栈。注意它是 toggle。
 
 `C-h v` (`describe-variable`)
 : 寻找某个全局变量的值、文档、定义位置等
@@ -168,6 +162,9 @@ abc 这个 symbol 定义一个函数，所以第二行报错了；求值是递�
 
 `C-h k` (`describe-key`)
 : 寻找某个快捷键当前绑定的 function
+
+[基于函数入口的调试法](https://emacs-china.org/t/emacs/11777)
+: 在函数被 call 时自动弹出调用栈
 
 [ANSI Common Lisp 手册中文版](https://acl.readthedocs.io/en/latest/zhCN/index.html)
 : 用来查找常用控制流和 helper 函数的名字。Elisp 和 Common lisp 区别不大。
