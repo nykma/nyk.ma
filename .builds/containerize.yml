@@ -1,0 +1,20 @@
+image: archlinux
+packages:
+- hugo
+- git
+- docker
+secrets:
+- eee9e131-8acd-4601-a395-2b004fb94514
+sources:
+- git@git.sr.ht:~nykma/hugo
+tasks:
+  - build: |
+      cd hugo
+      git submodule update --init
+      hugo --gc --minify
+      hugo --gc --minify
+  - publish: |
+      cd hugo
+      docker build -t nykma/nyk.moe:latest .
+      cat ~/.docker-token | docker login -u nykma --password-stdin
+      docker push nykma/nyk.moe:latest
