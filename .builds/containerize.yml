@@ -11,12 +11,13 @@ sources:
 - git@git.sr.ht:~nykma/hugo
 tasks:
   - build: |
+      sudo systemctl start docker
       cd hugo
       git submodule update --init
       hugo --gc --minify
       hugo --gc --minify
   - publish: |
       cd hugo
-      docker build -t nykma/nyk.moe:latest .
-      cat ~/.docker-token | docker login -u nykma --password-stdin
-      docker push nykma/nyk.moe:latest
+      sudo docker build -t nykma/nyk.moe:latest .
+      cat ~/.docker-token | sudo docker login -u nykma --password-stdin
+      sudo docker push nykma/nyk.moe:latest
