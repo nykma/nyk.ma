@@ -5,6 +5,8 @@ packages:
 - docker
 secrets:
 - eee9e131-8acd-4601-a395-2b004fb94514
+- daeb0d25-e9fc-4049-b292-08dde2b44829
+- b70532da-36cc-4aff-a4e1-88c2145181aa
 sources:
 - git@git.sr.ht:~nykma/hugo
 tasks:
