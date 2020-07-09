@@ -18,7 +18,8 @@ tasks:
       hugo --gc --minify
   - publish: |
       cd hugo
-      tag="docker.pkg.github.com/nykma/nyk.moe:latest"
+      repo="docker.pkg.github.com"
+      tag="$repo/nykma/nykma/blog:latest"
       sudo docker build -t $tag .
-      cat ~/.github-token | sudo docker login docker.pkg.github.com -u nykma --password-stdin
+      cat ~/.github-token | sudo docker login $repo -u nykma --password-stdin
       sudo docker push $tag
