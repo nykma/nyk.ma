@@ -4,7 +4,7 @@ packages:
 - git
 - docker
 secrets:
-- 1e12461a-ef10-4f9c-b15f-2b860efc96fe
+- eee9e131-8acd-4601-a395-2b004fb94514
 - daeb0d25-e9fc-4049-b292-08dde2b44829
 - b70532da-36cc-4aff-a4e1-88c2145181aa
 sources:
@@ -18,8 +18,7 @@ tasks:
       hugo --gc --minify
   - publish: |
       cd hugo
-      repo="docker.pkg.github.com"
-      tag="$repo/nykma/nykma/blog:latest"
-      sudo docker build -t $tag .
-      cat ~/.github-token | sudo docker login $repo -u nykma --password-stdin
-      sudo docker push $tag
+      image="nykma/nyk.ma:latest"
+      sudo docker build -t $image .
+      cat ~/.docker-token | sudo docker login -u nykma --password-stdin
+      sudo docker push $image
