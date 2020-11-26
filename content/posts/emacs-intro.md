@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 前言"
 author = ["Nyk Ma"]
 date = 2020-02-10T18:28:00+08:00
-lastmod = 2020-03-03T00:18:37+08:00
+lastmod = 2020-11-23T18:10:45+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -45,30 +45,39 @@ draft = false
 
 ### <span class="section-num">2.2</span> 有些操作会阻塞编辑器 {#有些操作会阻塞编辑器}
 
-虽然 Emacs 26+ 的 async 已经实现得很好了，日常操作基本不会被阻塞。但你依然还是可能会被什么套件里的同步调用卡一下。比如
+虽然 Emacs 26+ 的 async 已经实现得很好了，日常操作基本不会被阻塞。
+但你依然还是可能会被什么套件里的同步调用卡一下。比如
 
 -   打开一个 parse 特别费劲的文件，比如一个超大的单行 JSON
     -   等 [tree-sitter](https://tree-sitter.github.io/tree-sitter/) 完善后这将不会成为一个问题，应该……
 -   有些网络 IO，比如 gnus 下载新闻
     -   现代的前后端分离型软件（比如 `telega` ）不会有这个问题
 -   开一个大图片预览 Buffer 或打开一个 PDF
-    -   惊人的事实： Emacs 通过把 PDF 转成图片来预览。所以如果你对一个上百 M 的大 PDF 做缩放操作会十分酸爽……
+    -   惊人的事实： Emacs 通过把 PDF 转成图片来预览。所以如果你对一
+        个上百 M 的大 PDF 做缩放操作会十分酸爽……
 
-虽然上述都能被 `C-g` 打断，不过嘛，没有一个工具是万能的。如果你觉得有个功能 Emacs 干得不够好，那就立刻换一个工具吧。时间宝贵。
+虽然上述都能被 `C-g` 打断，不过嘛，没有一个工具是万能的。如果你觉
+得有个功能 Emacs 干得不够好，那就立刻换一个工具吧。时间宝贵。
 
 
 ### <span class="section-num">2.3</span> 不够轻量，导致默认装机量不够 {#不够轻量-导致默认装机量不够}
 
-这个是真的没办法了… `vi` （不是 `vim` ）几乎是每个服务器 Linux 的标配，但 Emacs 的基础包实在太大[^fn:3]，甚至不少桌面版 Linux 都不会预装它。
+这个是真的没办法了… `vi` （不是 `vim` ）几乎是每个服务器 Linux 的
+标配，但 Emacs 的基础包实在太大[^fn:3]，甚至不少桌面版 Linux 都不
+会预装它。
 
 不过 macOS 居然预装了它，难道帮主爱用？
 
 
 ### <span class="section-num">2.4</span> 前后端互动麻烦 {#前后端互动麻烦}
 
-Emacs 作为前端与后端进程通信的场景，在极端情况下，性能不理想：后端 burst 大量数据时可能会卡死 Emacs ，比如 LSP 后端一次性给了太多的补全建议之类的。
+Emacs 作为前端与后端进程通信的场景，在极端情况下，性能不理想：后
+端 burst 大量数据时可能会卡死 Emacs ，比如 LSP 后端一次性给了太多
+的补全建议之类的。
 
 如果写 Emacs 的外部动态库，弹性就不太够。
+
+> Emacs 27.1 开始内置了一个 C 写的 JSON parser，可以缓解这个问题
 
 
 ## <span class="section-num">3</span> 长处？ {#长处}
@@ -78,20 +87,30 @@ Emacs 作为前端与后端进程通信的场景，在极端情况下，性能�
 
 除了状态栏（mode line）外[^fn:4]，所有你看到的文字都能使用统一的逻辑、统一的环境来互动：
 
--   你在写文档 (`org-mode`) ，文档里需要插入一段 C 。org-mode 提供一个函数，把这段嵌入代码映射到一个新的子窗口。你可以在这个子窗口里享受所有编辑 C 项目时你所使用的工具和环境，比如代码补全(LSP 和
-    `company-mode`)、预定义的代码片段（ `yasnippet` ）、语法查错（ `flycheck` ）等。
+-   你在写文档 (`org-mode`) ，文档里需要插入一段 C 。org-mode 提供
+    一个函数，把这段嵌入代码映射到一个新的子窗口。你可以在这个子窗口里
+    享受所有编辑 C 项目时你所使用的工具和环境，比如代码补全(LSP 和
+    `company-mode`)、预定义的代码片段（ `yasnippet` ）、语法查错
+    （ `flycheck` ）等。
 
     {{< figure src="/ox-hugo/深度截图_st_20200211115954.png" link="/ox-hugo/深度截图_st_20200211115954.png" >}}
 -   用 [helm grep](https://github.com/emacs-helm/helm/wiki/Grep) 可以搜索整个 Project ，搜索结果呈现在一个 Buffer
-    里。你可以[直接修改这个 Buffer 并「保存」](https://github.com/mhayashi1120/Emacs-wgrep)。同样，修改过程中你可以使用所有你早已熟悉的文本处理工具和流程，比如可视化正则文本处理器 `anzu` 、多光标 `multiple-cursors.el` ，甚至临时写个
+    里。你可以[直接修改这个 Buffer 并「保存」](https://github.com/mhayashi1120/Emacs-wgrep)。同样，修改过程中你可
+    以使用所有你早已熟悉的文本处理工具和流程，比如可视化正则文本处
+    理器 `anzu` 、多光标 `multiple-cursors.el` ，甚至临时写个
     elisp 函数并当场执行也可以。
 
     {{< figure src="/ox-hugo/深度截图_st_20200211120332.png" link="/ox-hugo/深度截图_st_20200211120332.png" >}}
 -   Emacs 自带的 `dired` 是一个文件浏览器。同样，你可以在它的
-    buffer 里「[直接修改并保存](https://masteringemacs.org/article/wdired-editable-dired-buffers)」。从此批量更名再也不用找额外的软件或者记额外的命令。注意图中右下角的 `Editable` 。
+    buffer 里「[直接修改并保存](https://masteringemacs.org/article/wdired-editable-dired-buffers)」。从此批量更名再也不用找额外的软件或
+    者记额外的命令。注意图中右下角的 `Editable` 。
 
     {{< figure src="/ox-hugo/深度截图_st_20200211120500.png" link="/ox-hugo/深度截图_st_20200211120500.png" >}}
--   `eval-expression` （默认 `M-:` ） 可以把最底下一行（minibuffer）变成一个临时的 Elisp REPL，这里你可以执行任何 Elisp 函数，结果也会回显在里面。哪怕这个输入框只有一行高度，你会发现编辑体验和编辑一个 `.el` 文件是一致的：都有括号配平、都有函数名补完、一样能使用片段展开，甚至还能继续用 `C-x C-e` 来「临时执行表达式的一部分」。
+-   `eval-expression` （默认 `M-:` ） 可以把最底下一行（minibuffer）变成一个临时
+    的 Elisp REPL，这里你可以执行任何 Elisp 函数，结果也会回显在里
+    面。哪怕这个输入框只有一行高度，你会发现编辑体验和编辑一个 `.el` 文
+    件是一致的：都有括号配平、都有函数名补完、一样能使用片段展开，
+    甚至还能继续用 `C-x C-e` 来「临时执行表达式的一部分」。
 
     > 这一行的可订制性和大 buffer 是一模一样的，很多软件，诸如 [ivy](https://github.com/abo-abo/swiper%20) 或者 [smex](https://github.com/nonsequitur/smex) ，都把这一行玩出了花。
 
@@ -128,12 +147,16 @@ Peter就回答了这一句，然后静静地等待，准备接受教授的质疑
 构建起来的，而 Lisp 的迷人之处就在于「代码即数据，数据即代码」：
 List 在没被求值之前是数据，被求值时就成了代码。
 
-视频里使用的那些快捷键和函数，与其说是文本操作，不如说是操作了语法树后，又重新渲染回 buffer 文本。所以在 Emacs 里写 Lisp 、写
-Clojure 、写 Elm 是非常非常享受的事情，心智负担和操作负担都比其它抽象语言好得多。
+视频里使用的那些快捷键和函数，与其说是文本操作，不如说是操作了语
+法树后，又重新渲染回 buffer 文本。所以在 Emacs 里写 Lisp 、写
+Clojure 、写 Elm 是非常非常享受的事情，心智负担和操作负担都比其它
+抽象语言好得多。
 
-不要去玩那些括号玩笑了，差远了，用 `paredit` 写 lisp 根本不需要数括号，哪怕把括号全隐藏都能写出 valid 的程序。
+不要去玩那些括号玩笑了，差远了，用 `paredit` 写 lisp 根本不需要数
+括号，哪怕把括号全隐藏都能写出 valid 的程序。
 
-代码是什么？是文本。数据是什么？是结构。「文本即结构」的血脉流淌在 Emacs 的各个角落，除了写 Lisp 之外：
+代码是什么？是文本。数据是什么？是结构。「文本即结构」的血脉流淌
+在 Emacs 的各个角落，除了写 Lisp 之外：
 
 -   `paredit-everywhere` 可以把「编辑语法树」的思想扩展到几乎所有程序语言上
 
@@ -281,7 +304,8 @@ Emacs 能以 server 模式启动， expose 到端口或 socket 文件。client �
       (interactive)                 ;; 该函数可被 M-x 调用或绑定快捷键
       (backward-char 3))
     ```
-5.  在 `*scratch*` Buffer 里粘贴这一段[^fn:9]，把光标移到最后一个括号的后面，按 `C-x C-e` （ `(eval-last-sexp)` ），你会看到状态栏里出现了一个 `my/backward-3-chars` ，说明 defun 成功了[^fn:10]。
+5.  在 `*scratch*` Buffer 里粘贴这一段[^fn:9]，把光标移到最后一个括号的后面，按 `C-x C-e` （ `(eval-last-sexp)` ），
+    你会看到状态栏里出现了一个 `my/backward-3-chars` ，说明 defun 成功了[^fn:10]。
 6.  试试在 `M-x` 里调用 `my/backward-3-chars` ，works as expected.
 7.  不妨把它绑定到一个快捷键上？
 

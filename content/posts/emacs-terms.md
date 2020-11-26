@@ -1,12 +1,12 @@
----
-title: "Emacs 自力求生指南 ── 基本概念"
-author: ["Nyk Ma"]
-date: 2020-02-12T18:20:00+08:00
-lastmod: 2020-02-12T21:09:03+08:00
-tags: ["emacs"]
-categories: ["tutorial"]
-draft: false
----
++++
+title = "Emacs 自力求生指南 ── 基本概念"
+author = ["Nyk Ma"]
+date = 2020-02-12T18:20:00+08:00
+lastmod = 2020-11-23T18:10:46+08:00
+tags = ["emacs"]
+categories = ["tutorial"]
+draft = false
++++
 
 ## <span class="section-num">1</span> Buffer、Window 和 Frame {#buffer-window-和-frame}
 
@@ -21,13 +21,17 @@ draft: false
 每个 Window 的最底下有一根「状态栏」，这个状态栏叫 mode line。
 
 Window 里显示的内容是某个 Buffer 的一部分。Buffer 的名字写在 mode
-line 里。比如右上角的 Buffer 是 `*scratch*` ，是你冷启动 Emacs 后第一个看到的 Buffer[^fn:2]。
+line 里。比如右上角的 Buffer 是 `*scratch*` ，是你冷启动 Emacs 后
+第一个看到的 Buffer[^fn:2]。
 
-mode line 的内容可以被你或者 Major mode 随意定制，我截图里显示了诸如 window 编号、光标在第几行、文件编码、是否有未保存修改等。
-`telega` 额外显示了一些和 Telegram 有关的信息，比如群名、群人数、置顶信息、甚至一个「托盘图标」[^fn:3]。
+mode line 的内容可以被你或者 Major mode 随意定制，我截图里显示了诸
+如 window 编号、光标在第几行、文件编码、是否有未保存修改等。
+`telega` 额外显示了一些和 Telegram 有关的信息，比如群名、群人数、
+置顶信息、甚至一个「托盘图标」[^fn:3]。
 
 Buffer 和 Vim 的概念比较接近，但内容物的弹性比 Vim 好得多。比如
-[artist-mode](https://www.emacswiki.org/emacs/ArtistMode) 允许你用鼠标在这个 Buffer 的任意地方画画[^fn:4]；再比如这是一个 Image buffer，和普通文件一样使用 `C-x C-f` 打开：
+[artist-mode](https://www.emacswiki.org/emacs/ArtistMode) 允许你用鼠标在这个 Buffer 的任意地方画画[^fn:4]；再比如这
+是一个 Image buffer，和普通文件一样使用 `C-x C-f` 打开：
 
 {{< figure src="/ox-hugo/深度截图_st_20200212154417.png" link="/ox-hugo/深度截图_st_20200212154417.png" >}}
 
@@ -42,14 +46,18 @@ buffer 比杀进程还爽。
 </summary>
 <p class="details">
 
-我刚从 vim 切到 Emacs 的时候，有一点极其痛苦：似乎 Emacs 不鼓励你分割 window。
+我刚从 vim 切到 Emacs 的时候，有一点极其痛苦：似乎 Emacs 不鼓励你
+分割 window。
 
 三年后的现在，我大概理解为什么了：因为 Emacs 不需要频繁地分割
 window ，它的工作流不是这样的。
 
-比如一个查文档的场景：很多帮助文档 （比如 `describe-key` 之类的）在显示结果时， **不抢你的 point 焦点** ，只把屏幕平分一半，另一半显示文档。
+比如一个查文档的场景：很多帮助文档 （比如 `describe-key` 之类的）
+在显示结果时， **不抢你的 point 焦点** ，只把屏幕平分一半，另一半显示文
+档。
 
-为什么呢？因为很大可能你只需要「瞄一眼信息」而不用真的把光标跳过去复制什么东西，下面的 Emacs 功能就是为这个场景设计的：
+为什么呢？因为很大可能你只需要「瞄一眼信息」而不用真的把光标跳过去
+复制什么东西，下面的 Emacs 功能就是为这个场景设计的：
 
 `C-M-v` (`scroll-other-window`)
 : 对另一个 window 翻页
@@ -67,12 +75,17 @@ window ，它的工作流不是这样的。
 
 你理解了这个场景，就知道为什么最好按的 `1` 被分配这样一个功能了。
 
-Emacs 推荐你只关注一个 window ，其它内容都遵循这个「呼之即来，看完就关」原则，没有移动光标带来的精力开销和多余操作。
+Emacs 推荐你只关注一个 window ，其它内容都遵循这个「呼之即来，看
+完就关」原则，没有移动光标带来的精力开销和多余操作。
 
-为了做到「呼之即来」，Emacs 社区打磨沉淀了相当多的软件和工作流让你方便地跨行、跨文件、跨项目跳转。比如 `M-.`
-(`xref-find-definitions`) 用来查找光标下 symbol 在项目里的定义所在，看完了之后 `M-,` (`xref-pop-marker-stack`) 返回。跳过去瞄一眼，再回来，不需要分割 window 的。
+为了做到「呼之即来」，Emacs 社区打磨沉淀了相当多的软件和工作流让你
+方便地跨行、跨文件、跨项目跳转。比如 `M-.`
+(`xref-find-definitions`) 用来查找光标下 symbol 在项目里的定义所在，
+看完了之后 `M-,` (`xref-pop-marker-stack`) 返回。跳过去瞄
+一眼，再回来，不需要分割 window 的。
 
-当然，如果你不喜欢这个思想，一样完全可以定制[^fn:5]。毕竟 Emacs 没啥不能定制的。比如我自己就写了[一个简单的 hydra](https://github.com/nykma/nema/blob/develop/nema/nema-hydra.el#L8) 用来做 window 操作。
+当然，如果你不喜欢这个思想，一样完全可以定制[^fn:5]。毕竟 Emacs 没
+啥不能定制的。比如我自己就写了[一个简单的 hydra](https://github.com/nykma/nema/blob/develop/nema/nema-hydra.el#L8) 用来做 window 操作。
 </p>
 </details>
 
@@ -111,7 +124,8 @@ Emacs 推荐你只关注一个 window ，其它内容都遵循这个「呼之即
 
 输入光标叫 Point。
 
-某些光标的跳转操作，比如 `C-s` (`isearch-forward`) 搜索并跳到关键词，point 跳到了新位置后，原本的光标位置被标记为 Mark 。
+某些光标的跳转操作，比如 `C-s` (`isearch-forward`) 搜索并跳到关键
+词，point 跳到了新位置后，原本的光标位置被标记为 Mark 。
 
 Mark 和 Point 之间的部分称为 Region。
 
@@ -128,7 +142,9 @@ Mark 和 Point 之间的部分称为 Region。
 > Region 不需要「高亮」。 `C-x C-x` ( `exchange-point-and-mark` )
 能交换 Point 和 Mark 的位置，顺便高亮出 Region。
 
-> 手动「框选」一段文字： `set-mark-command` (`C-SPC`) 然后移动光标。这流程只有 tmux 里才算有用。Emacs 里用处不大，请活用你的搜索增强工具（比如上文的 `avy` ）。
+> 手动「框选」一段文字： `set-mark-command` (`C-SPC`) 然后移动光标。
+这流程只有 tmux 里才算有用。Emacs 里用处不大，请活用你的搜索增强工
+具（比如上文的 `avy` ）。
 
 
 ## <span class="section-num">4</span> Kill ring {#kill-ring}
@@ -139,10 +155,13 @@ Emacs 里常见的删除操作（比如 `C-w` `kill-region` 或者 `C-k`
 `kill-line` ）都会把被删除部分放在 kill ring 里，随时可以用 `C-y`
 (`yank`) 粘贴回 buffer。按几次 `C-y` 就粘贴几次。
 
-kill ring 是一个链表：在 `C-y` 一次后紧接着按 `M-y` (`yank-pop`)可以粘贴回倒数第二个 kill ring 内容，再按一次 `M-y` 就是倒数第三个内容，以此类推。
+kill ring 是一个链表：在 `C-y` 一次后紧接着按 `M-y` (`yank-pop`)可
+以粘贴回倒数第二个 kill ring 内容，再按一次 `M-y` 就是倒数第三个内
+容，以此类推。
 
 > 有些软件（比如 `helm` ）可以帮你可视化 kill ring
-  （ `helm-show-kill-ring` ），你可以直接从列表中搜索并挑一个粘贴，如下图是敲入关键字后 kill ring 被 filter 了之后的结果：
+  （ `helm-show-kill-ring` ），你可以直接从列表中搜索并挑一个粘贴，
+  如下图是敲入关键字后 kill ring 被 filter 了之后的结果：
 
 {{< figure src="/ox-hugo/深度截图_选择区域_20200212174753.png" link="/ox-hugo/深度截图_选择区域_20200212174753.png" >}}
 

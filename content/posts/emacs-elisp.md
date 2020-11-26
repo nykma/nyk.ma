@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 初识 Elisp"
 author = ["Nyk Ma"]
 date = 2020-05-17T14:44:00+08:00
-lastmod = 2020-05-17T15:49:36+08:00
+lastmod = 2020-11-23T18:10:46+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -15,7 +15,8 @@ Emacs lisp 是一个函数式语言。就我野生的 CS 知识理解，函数�
 
 ### <span class="section-num">1.1</span> List {#list}
 
-List: LISt processor 。List 是 lisp 程序的基本指令单元和数据结构。一对括号表示一个 list，内容物可以是任意东西
+List: LISt processor 。List 是 lisp 程序的基本指令单元和数据结构。
+一对括号表示一个 list，内容物可以是任意东西
 
 ```elisp
 ;; 这个 list 有一个元素：一个名为 list-packages 的 symbol
@@ -42,10 +43,14 @@ List: LISt processor 。List 是 lisp 程序的基本指令单元和数据结构
 4.  `nil` ，在 Lisp 世界里表示「假」。[^fn:1]
 5.  `(+ 1 2)`
 
-求值：「找到第一个 symbol 所定义的函数，并把 list 里剩下的元素求值后作为参数传入」。第一行有定义函数，且不需要参数； 因为我们没有把
-abc 这个 symbol 定义一个函数，所以第二行报错了；求值是递归的，所以第三行里的两个子 list 先被求值再传入 + 函数； 对空 list 的求值永远为空 list，所以第四行不会报错；
+求值：「找到第一个 symbol 所定义的函数，并把 list 里剩下的元素求值
+后作为参数传入」。第一行有定义函数，且不需要参数； 因为我们没有把
+abc 这个 symbol 定义一个函数，所以第二行报错了；求值是递归的，所以
+第三行里的两个子 list 先被求值再传入 + 函数； 对空 list 的求值永远
+为空 list，所以第四行不会报错；
 
-第五个结果有点意思，我们本来期望它可能出现 3 的，怎么这个 list 被原样抛出来了呢？
+第五个结果有点意思，我们本来期望它可能出现 3 的，怎么这个 list 被原
+样抛出来了呢？
 
 
 ### <span class="section-num">1.3</span> 保护 {#保护}
@@ -167,6 +172,7 @@ abc 这个 symbol 定义一个函数，所以第二行报错了；求值是递�
 : 在函数被 call 时自动弹出调用栈
 
 [ANSI Common Lisp 手册中文版](https://acl.readthedocs.io/en/latest/zhCN/index.html)
-: 用来查找常用控制流和 helper 函数的名字。Elisp 和 Common lisp 区别不大。
+: 用来查找常用控制流和 helper 函数
+    的名字。Elisp 和 Common lisp 区别不大。
 
 [^fn:1]: `nil` 和 `()` 意义相同。「真」是 `t` 。对 `nil` 和 `t` 的求值结果永远为自身。

@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南"
 author = ["Nyk Ma"]
 date = 2020-02-10T18:31:00+08:00
-lastmod = 2020-05-17T15:42:24+08:00
+lastmod = 2020-11-23T18:10:44+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -44,17 +44,12 @@ Python 和 vim 放一起比较哪个“好用”吗？
 先对齐术语，才能正确地提问题和搜问题。
 
 
-### <span class="org-todo todo TODO">TODO</span> <span class="section-num">2.1</span> 外一则：我要不要使用别人的配置 {#外一则-我要不要使用别人的配置}
-
-TLDR：可以，但这编辑器不属于你了。
-
-
 ## <span class="section-num">3</span> [初识 Elisp]({{< relref "emacs-elisp" >}}) {#初识-elisp--posts-emacs-elisp-dot-md}
 
 别怕。
 
 
-## <span class="org-todo todo TODO">TODO</span> <span class="section-num">4</span> 开始打造自己的编辑器！ {#开始打造自己的编辑器}
+## <span class="section-num">4</span> [开始打造自己的编辑器！]({{< relref "emacs-write-your-own" >}}) {#开始打造自己的编辑器--posts-emacs-write-your-own-dot-md}
 
 别怕。
 
