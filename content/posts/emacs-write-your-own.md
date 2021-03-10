@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 来写自己的配置吧"
 author = ["Nyk Ma"]
 date = 2020-10-03T15:41:00+08:00
-lastmod = 2020-11-23T18:10:47+08:00
+lastmod = 2021-03-11T04:05:43+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -14,21 +14,17 @@ draft = false
 [Purcell](https://github.com/purcell/emacs.d)、[Doom Emacs](https://github.com/hlissner/doom-emacs) 等。
 
 乍一看这些框架都十分全面且易用，但一旦你想改动点什么（which 在
-Emacs 使用期间是不可能没有的），就会变得很痛苦。因为你既要知道「这
-个软件包在原生 Emacs 里如何引入和配置」，又得熟悉「框架对原生
+Emacs 使用期间是不可能没有的），就会变得很痛苦。因为你既要知道「这个软件包在原生 Emacs 里如何引入和配置」，又得熟悉「框架对原生
 Emacs 做了什么二次封装」。
 
-一般的软件包会提供前者，所以你要自己学「如何定制你的框架」。现在阅
-读本文的你很可能 Lisp 底子还不够扎实，而 Lisp 又是一个可以把 DSL
+一般的软件包会提供前者，所以你要自己学「如何定制你的框架」。现在阅读本文的你很可能 Lisp 底子还不够扎实，而 Lisp 又是一个可以把 DSL
 玩得很花的语言（那些框架都是这么干的），所以你会很快迷失自我……
 
-> 一个软件包，一行 `(require 'xxx)` 加一行 `(xxx-mode 1)` 就能配置完
-> 成的事儿，你可以去看看 Spacemacs 里要[怎么给它写 Layer](https://github.com/syl20bnr/spacemacs/blob/master/doc/LAYERS.org) ……
+> 一个软件包，一行 `(require 'xxx)` 加一行 `(xxx-mode 1)` 就能配置完成的事儿，你可以去看看 Spacemacs 里要[怎么给它写 Layer](https://github.com/syl20bnr/spacemacs/blob/master/doc/LAYERS.org) ……
 >
 > …反正我不写 σ\`∀′) ﾟ∀ﾟ)σ
 >
-> 更不用说 debug 了，用了框架之后，不仅要对 Emacs 做 debug，说不定还
-> 要对框架做 debug ……
+> 更不用说 debug 了，用了框架之后，不仅要对 Emacs 做 debug，说不定还要对框架做 debug ……
 
 <!--quoteend-->
 
@@ -51,10 +47,7 @@ Emacs 做了什么二次封装」。
 
 ### <span class="section-num">2.1</span> 引用子文件 {#引用子文件}
 
-在堆积配置的过程中，你的 `init.el` 会急剧膨胀，不利于模块化管理。
-分出子文件是迟早的。初期阶段你只需要知道两种引入方法就够了。至于
-如何分，你可以在使用期间慢慢烦恼，毕竟 Emacs 用户最大的乐趣就是重
-构自己的配置文件……
+在堆积配置的过程中，你的 `init.el` 会急剧膨胀，不利于模块化管理。分出子文件是迟早的。初期阶段你只需要知道两种引入方法就够了。至于如何分，你可以在使用期间慢慢烦恼，毕竟 Emacs 用户最大的乐趣就是重构自己的配置文件……
 
 
 #### <span class="section-num">2.1.1</span> `(load "subfile.el")` {#load-subfile-dot-el}
@@ -71,8 +64,7 @@ Emacs 做了什么二次封装」。
 (message "subfile.el loaded.")
 ```
 
-此时 `*Messages*` buffer 里会打印三次 `subfile.el loaded.` ，也
-就是该文件被执行了三遍。
+此时 `*Messages*` buffer 里会打印三次 `subfile.el loaded.` ，也就是该文件被执行了三遍。
 
 这是本方法的特性：可以重复执行同一个文件。
 
@@ -162,8 +154,7 @@ git clone https://github.com/joaotavora/sly.git
 
 上面这个例子很糙，比如
 
--   每次打开 Emacs 都会触发一次 `package-refresh-contents` ，偏偏这
-    个动作又是阻塞的，所以在网络请求完成前啥都不能做……
+-   每次打开 Emacs 都会触发一次 `package-refresh-contents` ，偏偏这个动作又是阻塞的，所以在网络请求完成前啥都不能做……
 -   `(package-install)` 会爆出很多诸如 `‘better-defaults’ is already
             installed` 之类的信息在 `*Messages*` 里，所以需要判断该包是不是已安装
 -   `(require)` 还是没省掉
@@ -171,8 +162,7 @@ git clone https://github.com/joaotavora/sly.git
 
 #### <span class="section-num">2.2.3</span> 一站式解决： `use-package` 宏 {#一站式解决-use-package-宏}
 
-[`use-package`](https://github.com/jwiegley/use-package) 可以一举解决以上所有问题，同时能让软件包的配置更加有
-组织，强烈推荐使用。
+[`use-package`](https://github.com/jwiegley/use-package) 可以一举解决以上所有问题，同时能让软件包的配置更加有组织，强烈推荐使用。
 
 ```elisp
 ;; ~/.emacs.d/init.el
@@ -198,8 +188,7 @@ git clone https://github.com/joaotavora/sly.git
 ;; 有配置写在一个闭包里。你可以去看它的文档，或者抄我下面的用例
 ```
 
-> `use-package` 也是有不少对位替代品的，但在使用 Emacs 的前五年里你
-> 不用关心这个……
+> `use-package` 也是有不少对位替代品的，但在使用 Emacs 的前五年里你不用关心这个……
 
 <details>
 <summary>
@@ -207,8 +196,7 @@ git clone https://github.com/joaotavora/sly.git
 </summary>
 <p class="details">
 
-有时一些软件包以单个文件提供功能（比如 [Dired+](https://www.emacswiki.org/emacs/download/dired+.el)），或者作者还没来得
-及弄 MELPA 的发布流程（比如 [mix.el](https://github.com/ayrat555/mix.el)）。此时，为了能继续享用
+有时一些软件包以单个文件提供功能（比如 [Dired+](https://www.emacswiki.org/emacs/download/dired+.el)），或者作者还没来得及弄 MELPA 的发布流程（比如 [mix.el](https://github.com/ayrat555/mix.el)）。此时，为了能继续享用
 `use-package` 给我们带来的便利，我们要给它提供一个额外的下载器：
 `quelpa` 。
 
@@ -239,11 +227,9 @@ git clone https://github.com/joaotavora/sly.git
 
 #### <span class="section-num">2.2.4</span> `custom.el` {#custom-dot-el}
 
-有一些配置是不需要跟着 `.emacs.d` 这个 git repo 走的，比如我笔记本
-和台式机用了同一套软件包，但有两三个配置变量不同。
+有一些配置是不需要跟着 `.emacs.d` 这个 git repo 走的，比如我笔记本和台式机用了同一套软件包，但有两三个配置变量不同。
 
-此时 Emacs 自带的 `customize.el` 所提供的「临时配置修改、固化、还
-原、可视化」功能就十分有用。
+此时 Emacs 自带的 `customize.el` 所提供的「临时配置修改、固化、还原、可视化」功能就十分有用。
 
 它默认把本地配置 append 在 `init.el` 的末尾，对 `.emacs.d` 这个
 repo 是个很大的干扰，所以我们把固化配置分出去，单列一个文件：
@@ -266,14 +252,12 @@ repo 是个很大的干扰，所以我们把固化配置分出去，单列一个
 
 ## <span class="section-num">3</span> 常见需求及对应软件包 {#常见需求及对应软件包}
 
-下面列出的几个常见场景，Emacs 都有至少 3 个软件包能满足要求。我给
-出的不一定适合你。
+下面列出的几个常见场景，Emacs 都有至少 3 个软件包能满足要求。我给出的不一定适合你。
 
 
 ### <span class="section-num">3.1</span> Emacs 命令补全引擎 {#emacs-命令补全引擎}
 
-Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显得
-尤为重要。目前有两大阵营打得最火热：
+Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显得尤为重要。目前有两大阵营打得最火热：
 
 
 #### <span class="section-num">3.1.1</span> [Helm](https://github.com/emacs-helm/helm) {#helm}
@@ -296,9 +280,7 @@ Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显�
 ;; 好了。按个 M-x 试试
 ```
 
-> 虽然 Helm 最近（<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-09-11 Fri&gt;</span></span>）突然被 Archive 了，但我依然对它
-> 保持乐观：一方面，围绕 Helm 所建设的工具链生态已经相当靠谱稳定，
-> 哪怕 Helm 不更新个三四年也能一样用；另一方面，一定会有人接手
+> 虽然 Helm 最近（<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-09-11 五&gt;</span></span>）突然被 Archive 了，但我依然对它保持乐观：一方面，围绕 Helm 所建设的工具链生态已经相当靠谱稳定，哪怕 Helm 不更新个三四年也能一样用；另一方面，一定会有人接手
 > Fork 的。不慌。
 
 
@@ -354,8 +336,7 @@ Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显�
 
 ### <span class="section-num">3.4</span> 项目管理 {#项目管理}
 
-这个似乎没得挑： [Projectile](https://github.com/bbatsov/projectile) 可以满足对软件项目管理的所有要求：项
-目列表、项目内文件跳转、 `ag` 、 `make` 等等
+这个似乎没得挑： [Projectile](https://github.com/bbatsov/projectile) 可以满足对软件项目管理的所有要求：项目列表、项目内文件跳转、 `ag` 、 `make` 等等
 
 ```elisp
 ;; ~/.emacs.d/init.el
@@ -387,8 +368,7 @@ Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显�
 
 这里我要吹爆 [Magit](https://magit.vc/)，地表最强 git 客户端，没有之一。
 
-看看[这个视频](https://www.youtube.com/watch?v=rzQEIRRJ2T0)就够了，颠覆你对 git 客户端的一切成见，同时兼顾功能全
-面、组合自由和 UX 可用性，独一份。
+看看[这个视频](https://www.youtube.com/watch?v=rzQEIRRJ2T0)就够了，颠覆你对 git 客户端的一切成见，同时兼顾功能全面、组合自由和 UX 可用性，独一份。
 
 ```elisp
 ;; ~/.emacs.d/init.el
@@ -422,16 +402,14 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 
 ### <span class="section-num">3.6</span> 程序语言服务器 （LSP） {#程序语言服务器-lsp}
 
-微软完成了编辑器行业的大一统，LSP 目前已成为各大语言、各大编辑器
-的首选通信协议，免去一大堆开发语言支持的麻烦。
+微软完成了编辑器行业的大一统，LSP 目前已成为各大语言、各大编辑器的首选通信协议，免去一大堆开发语言支持的麻烦。
 
 目前 Emacs 流行的 LSP 客户端有两个：
 
 
 #### <span class="section-num">3.6.1</span> [`lsp-mode`](https://emacs-lsp.github.io/lsp-mode/) {#lsp-mode}
 
-[lsp-mode](https://emacs-lsp.github.io/lsp-mode/) 是 Emacs 第一个，也是目前功能最全面的一个 LSP 客户端。
-它可以把上游语言服务器的结果对接到 [flycheck](#flycheck)、[Company](#文本补全引擎)、[yasnippet](#template)、
+[lsp-mode](https://emacs-lsp.github.io/lsp-mode/) 是 Emacs 第一个，也是目前功能最全面的一个 LSP 客户端。它可以把上游语言服务器的结果对接到 [flycheck](#flycheck)、[Company](#文本补全引擎)、[yasnippet](#template)、
 [treemacs](https://github.com/Alexander-Miller/treemacs)里。再搭配上 `lsp-ui` 可以实现[相当丰富的内容呈现和互动](https://emacs-lsp.github.io/lsp-mode/page/gallery/)。
 
 启用很简单：在你想用的语言 major mode 里运行 `(lsp)` 即可。
@@ -482,8 +460,7 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 
 一个注重配置简单、一体化强的客户端。
 
-由于 `lsp-mode` 的一次大更新，把使用方式变成如今调用 `(lsp)` 即
-可，所以目前 `eglot` 竞争力不强了。
+由于 `lsp-mode` 的一次大更新，把使用方式变成如今调用 `(lsp)` 即可，所以目前 `eglot` 竞争力不强了。
 
 
 ### <span class="section-num">3.7</span> Template {#template}
@@ -513,8 +490,7 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 
 ### <span class="section-num">3.8</span> 搜索、跳转和替换 {#搜索-跳转和替换}
 
-这块可能是编辑器最高频调用的功能了，所以 Emacs 这类软件包是遍地开
-花，保证有一款合你心意。
+这块可能是编辑器最高频调用的功能了，所以 Emacs 这类软件包是遍地开花，保证有一款合你心意。
 
 我会写上我的选择理由（甚至没有理由……），你如果想自己发掘，可以去
 [/r/emacs](https://www.reddit.com/r/emacs) 或者 [EmacsChina](https://emacs-china.org/) 之类的社区搜一搜问一问。
@@ -522,23 +498,163 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 
 #### <span class="section-num">3.8.1</span> 项目内搜索： `helm-ag` {#项目内搜索-helm-ag}
 
+在「[万物皆文本]({{< relref "emacs-intro#万物皆文本" >}})」一章里你已经见识过它了。
 
-#### <span class="section-num">3.8.2</span> buffer 内搜索： `helm-swoop` 和 `ctrlf` {#buffer-内搜索-helm-swoop-和-ctrlf}
+```lisp
+(use-package helm-ag)
+```
+
+然后 `(projectile-ag)` （默认 `C-c C-p s s` ） 会自动调用它。
+
+当然， `ivy` 社区也有对应的工具，一搜就能搜到。
+
+
+#### <span class="section-num">3.8.2</span> buffer 内搜索： `ctrlf` 和 `helm-swoop` {#buffer-内搜索-ctrlf-和-helm-swoop}
+
+Emacs 自带一个快速关键词搜索： `(search-forward)` （默认 `C-s`&nbsp;[^fn:1]），但功能太简陋了。
+
+`ctrlf` 的出现恰好填补了这个需求的空白：它提供了很多高频常用信息（比如总结果数）和预设功能（比如正则），同时保持原版的快速和非侵占性。
+
+{{< figure src="/ox-hugo/Snipaste_2021-03-11_03-04-56.png" >}}
+
+```elisp
+(use-package ctrlf
+  :config
+  (ctrlf-mode t))
+;; 此时 C-s 已经被替换成 ctrlf 版本的了
+```
+
+而 `helm-swoop` 则会弹出一个新 buffer，将关键词匹配的所有行呈现出来，你可以用光标上下挑一个。
+
+```elisp
+(use-package helm-swoop
+  ;; 更多关于它的配置方法: https://github.com/ShingoFukuyama/helm-swoop
+  ;; 以下我的配置仅供参考
+  :bind
+  (("M-i" . helm-swoop)
+   ("M-I" . helm-swoop-back-to-last-point)
+   ("C-c M-i" . helm-multi-swoop)
+   ("C-x M-i" . helm-multi-swoop-all)
+   :map isearch-mode-map
+   ("M-i" . helm-swoop-from-isearch)
+   :map helm-swoop-map
+   ("M-i" . helm-multi-swoop-all-from-helm-swoop)
+   ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop))
+  :config
+  ;; 它像 helm-ag 一样，可以直接修改搜索结果 buffer 里的内容并 apply
+  (setq helm-multi-swoop-edit-save t)
+  ;; 如何给它新开分割窗口
+  ;; If this value is t, split window inside the current window
+  (setq helm-swoop-split-with-multiple-windows t))
+```
 
 
 #### <span class="section-num">3.8.3</span> 可视范围内跳转： `avy` {#可视范围内跳转-avy}
 
+一种更高频的跳转：你眼睛盯着屏幕上的一个关键词，要把光标跳到那儿去编辑。
 
-#### <span class="section-num">3.8.4</span> 正则替换： `anzu` {#正则替换-anzu}
+{{< figure src="/ox-hugo/Snipaste_2021-03-11_03-19-33.png" >}}
+
+本图里我调用了 `(avy-goto-char-timer)` 并快速键入跳转词 `helm`
+，0.3s 后所有可视范围内的 `helm` 都被标注上了编号，我只要继续敲入一个编号 `f` 就可以把光标跳转至那儿。
+
+> 同时原光标位置会成为 `mark` 。请参见「[基本概念]({{< relref "emacs-terms#point-mark-和-region" >}})」一章。
+
+<!--quoteend-->
+
+> 这个命令可以搜索所有「可视范围」，不仅是光标所在 window，它甚至可以跨 frame 跳转光标焦点。
+>
+> 试想你有两个显示器，分别开了两个 `emacsclient` 。
+>
+> 有了它，你可以一整天不摸鼠标。
+
+```elisp
+(use-package avy
+  :bind (("C-'" . avy-goto-char-timer) ;; Control + 单引号
+         ;; 复用上一次搜索
+         ("C-c C-j" . avy-resume))
+  :config
+  (setq avy-background t ;; 打关键字时给匹配结果加一个灰背景，更醒目
+        avy-all-windows t ;; 搜索所有 window，即所有「可视范围」
+        avy-timeout-seconds 0.3)) ;; 「关键字输入完毕」信号的触发时间
+```
 
 
-#### <span class="section-num">3.8.5</span> 多光标： `multi-cursor` {#多光标-multi-cursor}
+#### <span class="section-num">3.8.4</span> buffer 内正则替换： `anzu` {#buffer-内正则替换-anzu}
+
+我选它没啥原因，主要是它能「渐进式可视化」 search 正则和 replace
+结果。我可以边敲正则边想怎么写……
+
+Emacs 自带的正则替换没有预览，只有按了回车才知道自己打错表达式了……
+
+它已经很久没更新了，但好在一直能用。如果你有其它选择，也欢迎告诉我。
+
+```elisp
+(use-package anzu)
+;; 我都是手动调用它的，因为使用场景不多，但又不能没有……
+;; M-x anzu-query-replace-regexp
+```
 
 
-### <span class="org-todo todo TODO">TODO</span> <span class="section-num">3.9</span> Terminal {#terminal}
+#### <span class="section-num">3.8.5</span> 多光标： `multiple-cursors` {#多光标-multiple-cursors}
+
+强烈建议看[这个视频](https://www.youtube.com/watch?v=jNa3axo40qM)。三分钟圈粉。
+
+> 每个光标会有 **自己的 kill-ring** ，这使得它在 `dired` 里极其好用。
+
+```elisp
+(use-package multiple-cursors
+  :bind (("C-S-c" . mc/edit-lines) ;; 每行一个光标
+         ("C->" . mc/mark-next-like-this-symbol) ;; 全选光标所在单词并在下一个单词增加一个光标。通常用来启动一个流程
+         ("C-M->" . mc/skip-to-next-like-this) ;; 跳过当前单词并跳到下一个单词，和上面在同一个流程里。
+         ("C-<" . mc/mark-previous-like-this-symbol) ;; 同样是开启一个多光标流程，但是是「向上找」而不是向下找。
+         ("C-M-<" . mc/skip-to-previous-like-this) ;; 跳过当前单词并跳到上一个单词，和上面在同一个流程里。
+         ("C-c C->" . mc/mark-all-symbols-like-this))) ;; 直接多选本 buffer 所有这个单词
+```
+
+
+### <span class="section-num">3.9</span> Terminal {#terminal}
+
+目前有两种常用的。
+
+
+#### <span class="section-num">3.9.1</span> 真 Terminal： [`emacs-libvterm`](https://github.com/akermu/emacs-libvterm) {#真-terminal-emacs-libvterm}
+
+\*nix 用户请直接安装它，它就是你心目中的 terminal，没有任何不使用它的理由。该有的富文本装饰、全屏 TUI 它都支持，不会排版错乱，性能也 OK。
+
+因为它在 Emacs 世界里只是一个能互动的文字 buffer，所以上面那些搜索跳转工具你可以直接拿来用，效率不是其它 GUI terminal emulator
+能比的。
+
+唯一一个缺点，Windows 不能用。
+
+```elisp
+(use-package vterm
+  ;; https://github.com/akermu/emacs-libvterm
+  ;; 请务必参照项目 README 作配置，以下不是我的完整配置。
+  ;; 比如，如果你要和 shell 双向互动（对，它可以双向互动），
+  ;; 那么 shell 需要做一点配置以解析 vterm 传递过来的信号
+  :config
+  (setq vterm-kill-buffer-on-exit t)) ;; shell 退出时 kill 掉这个 buffer
+;; 使用 M-x vterm 新建一个 terminal
+;; 在 terminal 中使用 C-c C-t 进入「选择」模式（类似 Tmux 里的 C-b [ ）
+```
+
+
+#### <span class="section-num">3.9.2</span> 模拟 terminal: `eshell` {#模拟-terminal-eshell}
+
+这是 Emacs 自带的，使用纯 elisp 实现的，与系统无关的 shell。
+
+主要好处是两个：
+
+-   Windows 也能用，而且用法和 \*nix 系统一样
+-   能直接执行 elisp 表达式
+
+可以用 `M-x eshell` 体验一下。
 
 
 ### <span class="org-todo todo TODO">TODO</span> <span class="section-num">3.10</span> 主题、字体、Mode Line {#主题-字体-mode-line}
 
 
 ### <span class="org-todo todo TODO">TODO</span> <span class="section-num">3.11</span> Modal Editing {#modal-editing}
+
+[^fn:1]: 向下搜索本 buffer，到 buffer 末尾后会返回开头继续搜。反向动作（向上搜索）是 `(search-backward)` （默认 `C-r` ）
