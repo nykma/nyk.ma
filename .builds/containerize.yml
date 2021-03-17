@@ -14,8 +14,7 @@ tasks:
       sudo systemctl start docker
       cd hugo
       git submodule update --init
-      hugo --gc --minify
-      hugo --gc --minify
+      hugo --gc --minify -e production
   - publish: |
       cd hugo
       image="nykma/nyk.ma:latest"
