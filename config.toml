@@ -67,13 +67,6 @@ enableEmoji = true
         title = ""
         weight = 3
       [[languages.zh-cn.menu.main]]
-        identifier = "documentation"
-        pre = ""
-        name = "文档"
-        url = "/categories/documentation/"
-        title = ""
-        weight = 4
-      [[languages.zh-cn.menu.main]]
         identifier = "github"
         pre = "<i class='fab fa-github fa-fw'></i>"
         post = ""
@@ -83,7 +76,7 @@ enableEmoji = true
         weight = 5
       [[languages.zh-cn.menu.main]]
         identifier = "keyboard"
-        pre = "<i class='fab fa-keyboard fa-fw'></i>"
+        pre = "<i class='far fa-keyboard'></i>"
         post = ""
         name = ""
         url = "http://www.keyboard-layout-editor.com/#/gists/a6dddd2811af21b671fd"
@@ -112,7 +105,7 @@ enableEmoji = true
       [languages.zh-cn.params.search]
         enable = true
         # 搜索引擎的类型 ("lunr", "algolia")
-        type = "algolia"
+        type = "lunr"
         # 文章内容最长索引长度
         contentLength = 4000
         # 搜索框的占位提示语
