@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 来写自己的配置吧"
 author = ["Nyk Ma"]
 date = 2020-10-03T15:41:00+08:00
-lastmod = 2021-03-22T17:52:19+08:00
+lastmod = 2021-03-22T17:57:38+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -818,7 +818,7 @@ Emacs 不仅有输入法，而且做得很好。
 ```elisp
 (use-package srcery-theme
      :config
-     (load-theme 'srcery t)
+     (load-theme 'srcery t))
 ```
 
 有的 theme 会附带其它配置项，请参阅各自的 README 进行配置。
@@ -854,7 +854,7 @@ Emacs 不仅有输入法，而且做得很好。
 
 #### <span class="section-num">3.15.2</span> xah-fly-keys {#xah-fly-keys}
 
-[xah-fly-keys](https://github.com/xahlee/xah-fly-keys) ，程序员四大魔王之一李杀的作品，一个对 Emacs 深度优化后的 vim。
+[xah-fly-keys](https://github.com/xahlee/xah-fly-keys) ，程序员四大魔王之一李杀的作品，一个为适配 Emacs 而深度魔改后的 vim。
 
 
 #### <span class="section-num">3.15.3</span> god-mode {#god-mode}
