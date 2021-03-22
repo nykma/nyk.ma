@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南"
 author = ["Nyk Ma"]
 date = 2020-02-10T18:31:00+08:00
-lastmod = 2020-11-23T18:10:44+08:00
+lastmod = 2021-03-22T17:52:16+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -58,12 +58,7 @@ Python 和 vim 放一起比较哪个“好用”吗？
 
 好的游戏，越到 endgame 越好玩。
 
-<details>
-<summary>
-正文里使用的按键表达法：
-</summary>
-<p class="details">
-
+{{< admonition note "正文里使用的按键表达法：" >}}
 `C-g`
 : `Ctrl + g`
 
@@ -78,5 +73,4 @@ Python 和 vim 放一起比较哪个“好用”吗？
 
 `C-h P org RET`
 : `Ctrl+h` ，然后按大写 `P` （ `Shift + p` ），然后打入 `org` ，回车
-</p>
-</details>
+{{< /admonition >}}

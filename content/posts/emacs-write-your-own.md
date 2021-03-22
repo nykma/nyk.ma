@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 来写自己的配置吧"
 author = ["Nyk Ma"]
 date = 2020-10-03T15:41:00+08:00
-lastmod = 2021-03-11T04:05:43+08:00
+lastmod = 2021-03-22T17:52:19+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -162,7 +162,7 @@ git clone https://github.com/joaotavora/sly.git
 
 #### <span class="section-num">2.2.3</span> 一站式解决： `use-package` 宏 {#一站式解决-use-package-宏}
 
-[`use-package`](https://github.com/jwiegley/use-package) 可以一举解决以上所有问题，同时能让软件包的配置更加有组织，强烈推荐使用。
+[use-package](https://github.com/jwiegley/use-package) 可以一举解决以上所有问题，同时能让软件包的配置更加有组织，强烈推荐使用。
 
 ```elisp
 ;; ~/.emacs.d/init.el
@@ -190,12 +190,7 @@ git clone https://github.com/joaotavora/sly.git
 
 > `use-package` 也是有不少对位替代品的，但在使用 Emacs 的前五年里你不用关心这个……
 
-<details>
-<summary>
-安装单文件 / git clone软件包
-</summary>
-<p class="details">
-
+{{< admonition note "安装单文件 / git clone软件包" >}}
 有时一些软件包以单个文件提供功能（比如 [Dired+](https://www.emacswiki.org/emacs/download/dired+.el)），或者作者还没来得及弄 MELPA 的发布流程（比如 [mix.el](https://github.com/ayrat555/mix.el)）。此时，为了能继续享用
 `use-package` 给我们带来的便利，我们要给它提供一个额外的下载器：
 `quelpa` 。
@@ -221,8 +216,7 @@ git clone https://github.com/joaotavora/sly.git
   :quelpa (mix.el :fetcher github :repo "ayrat555/mix.el" :files ("mix.el" "LICENSE"))
   :hook ((elixir-mode . mix-minor-mode)))
 ```
-</p>
-</details>
+{{< /admonition >}}
 
 
 #### <span class="section-num">2.2.4</span> `custom.el` {#custom-dot-el}
@@ -260,9 +254,9 @@ repo 是个很大的干扰，所以我们把固化配置分出去，单列一个
 Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显得尤为重要。目前有两大阵营打得最火热：
 
 
-#### <span class="section-num">3.1.1</span> [Helm](https://github.com/emacs-helm/helm) {#helm}
+#### <span class="section-num">3.1.1</span> Helm {#helm}
 
-符合你对「强大」的一切想象。
+[Helm](https://github.com/emacs-helm/helm) 符合你对「强大」的一切想象。
 
 摒弃 Minibuffer 而使用一个新 buffer 显示丰富的内容。
 
@@ -280,13 +274,13 @@ Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显�
 ;; 好了。按个 M-x 试试
 ```
 
-> 虽然 Helm 最近（<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-09-11 五&gt;</span></span>）突然被 Archive 了，但我依然对它保持乐观：一方面，围绕 Helm 所建设的工具链生态已经相当靠谱稳定，哪怕 Helm 不更新个三四年也能一样用；另一方面，一定会有人接手
+> 虽然 Helm 最近（<span class="timestamp-wrapper"><span class="timestamp">&lt;2020-09-11 Fri&gt;</span></span>）突然被 Archive 了，但我依然对它保持乐观：一方面，围绕 Helm 所建设的工具链生态已经相当靠谱稳定，哪怕 Helm 不更新个三四年也能一样用；另一方面，一定会有人接手
 > Fork 的。不慌。
 
 
-#### <span class="section-num">3.1.2</span> [Ivy](https://github.com/abo-abo/swiper) {#ivy}
+#### <span class="section-num">3.1.2</span> Ivy {#ivy}
 
-实力强劲的竞争对手。注重「短平快」：停留短、内容平、速度快。适合习惯快速精准处理信息的用户。
+[Ivy](https://github.com/abo-abo/swiper) 是 Helm 的实力强劲的竞争对手，注重「短平快」：停留短、内容平、速度快。适合习惯快速精准处理信息的用户。
 
 
 ### <span class="section-num">3.2</span> 文本补全引擎 {#文本补全引擎}
@@ -321,9 +315,9 @@ Minibuffer 的使用贯穿 emacs 始终。所以增强 Minibuffer 功能就显�
 它。优点和缺点都是功能少。
 
 
-#### <span class="section-num">3.3.2</span> [`flycheck`](https://www.flycheck.org/en/latest/) {#flycheck}
+#### <span class="section-num">3.3.2</span> `flycheck` {#flycheck}
 
-这是一个更「现代」的引擎，功能更多，呈现样式更丰富，同时和 `lsp-mode` 结合最好。
+[flycheck](https://www.flycheck.org/en/latest/) 是一个更「现代」的引擎，功能更多，呈现样式更丰富，同时和 `lsp-mode` 结合最好。
 
 ```elisp
 (use-package flycheck
@@ -407,7 +401,7 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 目前 Emacs 流行的 LSP 客户端有两个：
 
 
-#### <span class="section-num">3.6.1</span> [`lsp-mode`](https://emacs-lsp.github.io/lsp-mode/) {#lsp-mode}
+#### <span class="section-num">3.6.1</span> `lsp-mode` {#lsp-mode}
 
 [lsp-mode](https://emacs-lsp.github.io/lsp-mode/) 是 Emacs 第一个，也是目前功能最全面的一个 LSP 客户端。它可以把上游语言服务器的结果对接到 [flycheck](#flycheck)、[Company](#文本补全引擎)、[yasnippet](#template)、
 [treemacs](https://github.com/Alexander-Miller/treemacs)里。再搭配上 `lsp-ui` 可以实现[相当丰富的内容呈现和互动](https://emacs-lsp.github.io/lsp-mode/page/gallery/)。
@@ -456,16 +450,16 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 ```
 
 
-#### <span class="section-num">3.6.2</span> [`eglot`](https://github.com/joaotavora/eglot) {#eglot}
+#### <span class="section-num">3.6.2</span> `eglot` {#eglot}
 
-一个注重配置简单、一体化强的客户端。
+[eglot](https://github.com/joaotavora/eglot) 是一个注重配置简单、一体化强的客户端。
 
 由于 `lsp-mode` 的一次大更新，把使用方式变成如今调用 `(lsp)` 即可，所以目前 `eglot` 竞争力不强了。
 
 
 ### <span class="section-num">3.7</span> Template {#template}
 
-应该就一个： [`yasnippet`](https://github.com/joaotavora/yasnippet)。提供非常灵活的动态模板功能（因为模板里可以有 elisp）。
+应该就一个： [yasnippet](https://github.com/joaotavora/yasnippet)。提供非常灵活的动态模板功能（因为模板里可以有 elisp）。
 
 ```elisp
 (use-package yasnippet
@@ -618,7 +612,9 @@ Emacs 自带的正则替换没有预览，只有按了回车才知道自己打�
 目前有两种常用的。
 
 
-#### <span class="section-num">3.9.1</span> 真 Terminal： [`emacs-libvterm`](https://github.com/akermu/emacs-libvterm) {#真-terminal-emacs-libvterm}
+#### <span class="section-num">3.9.1</span> 真 Terminal： `emacs-libvterm` {#真-terminal-emacs-libvterm}
+
+<https://github.com/akermu/emacs-libvterm>
 
 \*nix 用户请直接安装它，它就是你心目中的 terminal，没有任何不使用它的理由。该有的富文本装饰、全屏 TUI 它都支持，不会排版错乱，性能也 OK。
 
@@ -652,9 +648,234 @@ Emacs 自带的正则替换没有预览，只有按了回车才知道自己打�
 可以用 `M-x eshell` 体验一下。
 
 
-### <span class="org-todo todo TODO">TODO</span> <span class="section-num">3.10</span> 主题、字体、Mode Line {#主题-字体-mode-line}
+### <span class="section-num">3.10</span> 窗口、工作空间管理 {#窗口-工作空间管理}
+
+虽然 Emacs 有默认的 [分屏逻辑]({{< relref "emacs-terms#buffer-window-和-frame" >}})，但这不代表我们不能自定义了。
 
 
-### <span class="org-todo todo TODO">TODO</span> <span class="section-num">3.11</span> Modal Editing {#modal-editing}
+#### <span class="section-num">3.10.1</span> edwina {#edwina}
+
+[edwina](https://github.com/ajgrf/edwina) 是 Emacs 版的「平铺式 WM」。有了它，你 80% 的时间不用操心窗口管理问题。
+
+它把窗口分为「主窗口」和「副窗口」两种，主窗口默认占满左半屏作为你的工作重心，副窗口叠放在右半屏。你可以随时交换主副窗口的位置。
+
+```elisp
+(use-package edwina
+  :config
+  ;; 让所有 display-buffer 动作都新增一个 window （而不是复用已经打开此 buffer 的 window）
+  (setq display-buffer-base-action '(display-buffer-below-selected))
+  ;; 以下定义会被 (edwina-setup-dwm-keys) 增加 'M-' 修饰。
+  ;; 我自定义了一套按键，因为原版会把我很常用的 M-d 覆盖掉。
+  (setq edwina-dwm-key-alist
+        '(("r" edwina-arrange)
+          ("j" edwina-select-next-window)
+          ("k" edwina-select-previous-window)
+          ("J" edwina-swap-next-window)
+          ("K" edwina-swap-previous-window)
+          ("h" edwina-dec-mfact)    ;; 主窗口缩窄
+          ("l" edwina-inc-mfact)    ;; 主窗口拉宽
+          ("D" edwina-dec-nmaster)  ;; 减少主窗口的数量
+          ("I" edwina-inc-nmaster)  ;; 增加主窗口的数量
+          ("C" edwina-delete-window) ;; 关闭窗口
+          ("RET" edwina-zoom t)     ;; 交换「主窗口」和「副窗口」
+          ("return" edwina-zoom t)
+          ("S-RET" edwina-clone-window t) ;; 复制一个本窗口
+          ("S-return" edwina-clone-window t)))
+  (edwina-setup-dwm-keys)
+  (edwina-mode 1))
+```
+
+
+#### <span class="section-num">3.10.2</span> winum {#winum}
+
+[winum](https://github.com/deb0ch/emacs-winum) 的功能很简单：给每个 window 增加一个数字编号。
+
+
+#### <span class="section-num">3.10.3</span> eyebrowse {#eyebrowse}
+
+[eyebrowse](https://depp.brause.cc/eyebrowse/) 可以保存和呼出窗口布局。
+
+
+#### <span class="section-num">3.10.4</span> exwm {#exwm}
+
+这里提到 [exwm](https://github.com/ch11ng/exwm) 其实有点文不对题：它可以让 emacs 变为系统级 window
+manager，让你的整个桌面环境享受所有上述 Emacs 工具带来的操作便利性和一致性。搭配下文 [Modal Editing](#modal-editing) 或者本章其它工具有奇效。
+
+
+### <span class="section-num">3.11</span> 字体 {#字体}
+
+> 显然，本章对 TUI 不 make sense。
+
+Emacs GUI 完整支持 Unicode，对字体定义的精细度极高，颗粒度小到每个 Unicode 码位。正因其自由度太大，实际配置时坑很多。
+
+这里仅介绍常用设置指令和 debug 方法。
+
+> 通过组合以下函数，我[自己写了一套设置字体的流程](https://github.com/nykma/nema/blob/develop/my-sample/font.el) 。
+
+
+#### <span class="section-num">3.11.1</span> `(font-spec :family "xxx" :height 12)` {#font-spec-family-xxx-height-12}
+
+新建一个字体实例，字体名为 "xxx"，大小为 12 。它不保证这个字体能真正被找到。
+
+具体参见文档 <kbd>C-h f font-spec</kbd>
+
+
+#### <span class="section-num">3.11.2</span> `(find-font font-spec-instance)` {#find-font-font-spec-instance}
+
+使用 `(font-spec)` 实例的定义查找字体。找到了返回一个
+`font-entity` 实例，没找到返回 `nil` 。
+
+具体参见文档 <kbd>C-h f find-font</kbd>
+
+实际例子： Victor Mono
+
+```lisp
+(let* ((normal-font (font-spec :family "Victor Mono" :height 12))
+       (founded-font (find-font normal-font)))
+  (if founded-font
+      (message "Font found! %s" founded-font)
+    ;; else
+    (message "Font not found!")))
+```
+
+
+#### <span class="section-num">3.11.3</span> `(set-fontset-font)` {#set-fontset-font}
+
+使用一个 `(font-spec)` 实例设置某个 Unicode 区段的字体。
+
+参数意义请参考文档 <kbd>C-h f set-fontset-font</kbd>
+
+实际例子：设置 CJK 字符集的字体为 `Sarasa Term Slab SC`
+
+```elisp
+(let ((cjk-font (font-spec :family "Sarasa Term Slab SC" :height 12)))
+  (if (find-font cjk-font)
+      (set-fontset-font t cjk-charset cjk-font nil 'append)
+    ;; else
+    (message "CJK font not found")))
+```
+
+
+#### <span class="section-num">3.11.4</span> <kbd>C-u C-x =</kbd> {#c-u-c-x}
+
+查看当前光标下的字是什么，以及使用了哪个字体。
+
+{{< figure src="/ox-hugo/2021-03-22_15-50.png" >}}
+
+
+#### <span class="section-num">3.11.5</span> `(helm-select-xfont)` {#helm-select-xfont}
+
+浏览、搜索所有字体。用 <kbd>C-j</kbd> 可以预览 + 拷贝字体名进 kill ring。
+
+{{< figure src="/ox-hugo/2021-03-22_15-54.png" >}}
+
+
+#### <span class="section-num">3.11.6</span> `(insert-char)` (<kbd>C-x 8 RET</kbd>) {#insert-char----c-x-8-ret}
+
+从 Unicode 里搜索一个码位并插入 buffer。
+
+
+### <span class="section-num">3.12</span> 输入法 {#输入法}
+
+Emacs 不仅有输入法，而且做得很好。
+
+
+#### <span class="section-num">3.12.1</span> 啊？为啥？ {#啊-为啥}
+
+-   用过 vim 的你肯定苦恼过： `NORMAL` 模式下按了 <kbd>jjj</kbd> 发现忘了关输入法
+-   输入法不知道你在写代码还是写注释， shift 按到爆炸
+-   不同系统下输入法高频词不同，环境不统一，云同步又不放心
+-   没装输入法 / 管理员不允许我装输入法
+
+
+#### <span class="section-num">3.12.2</span> emacs-rime {#emacs-rime}
+
+[emacs-rime](https://github.com/DogLooksGood/emacs-rime) 是 \*nix 系统首选，体验和桌面输入法几乎一致。
+
+优点：
+
+-   C/S 工作模式，速度快
+-   如果你用过 Rime，可以直接复用你的配置
+
+缺点：
+
+-   Server 端需要编译
+-   需要熟悉 Rime
+
+
+#### <span class="section-num">3.12.3</span> pyim {#pyim}
+
+[pyim](https://github.com/tumashu/pyim#%E9%85%8D%E7%BD%AE) 是 Emacs 上的老牌中文输入法，纯 Elisp 实现，在无法编译
+`emacs-rime` 的场景下十分有用。
+
+
+### <span class="section-num">3.13</span> 色彩主题 {#色彩主题}
+
+搜索 [emacs theme](https://www.google.com/search?q=emacs%20theme) 并挑一个你喜欢的。
+
+一般来说，引入 Theme 只需要类似以下代码：
+
+```elisp
+(use-package srcery-theme
+     :config
+     (load-theme 'srcery t)
+```
+
+有的 theme 会附带其它配置项，请参阅各自的 README 进行配置。
+
+> 这里有一份[我经手过的主题列表](https://github.com/nykma/nema/blob/develop/nema/nema-appearance.el#L72)供你参考。
+
+
+### <span class="section-num">3.14</span> Mode line {#mode-line}
+
+和主题一样，搜索 [emacs mode line](https://github.com/search?q=emacs+mode+line) 并挑一个你喜欢的。
+
+> 这里有一份[我经手过的 mode line 列表](https://github.com/nykma/nema/blob/develop/nema/nema-appearance.el#L152)供你参考。
+
+
+### <span class="section-num">3.15</span> Modal Editing {#modal-editing}
+
+你第一个接触的 Modal editor 很可能是 Vim，但 Vim 很可能 ****不是****
+最适合你的 modal 方案。
+
+由于我个人不使用 modal，这里就泛泛聊一些我看过的 modal 方案。
+
+> 相信我，你真的不需要 modal。
+
+
+#### <span class="section-num">3.15.1</span> evil {#evil}
+
+[evil-mode](https://github.com/emacs-evil/evil) 不仅做到了几乎 100% 兼容 Vim，甚至在有些方面能超越 Vim。
+
+优点是有相当多的 emacs 软件包和主题能开箱兼容 `evil` 。
+
+缺点是它太 vim 了。
+
+
+#### <span class="section-num">3.15.2</span> xah-fly-keys {#xah-fly-keys}
+
+[xah-fly-keys](https://github.com/xahlee/xah-fly-keys) ，程序员四大魔王之一李杀的作品，一个对 Emacs 深度优化后的 vim。
+
+
+#### <span class="section-num">3.15.3</span> god-mode {#god-mode}
+
+[god-mode](https://github.com/emacsorphanage/god-mode) 的特点是，保留 Emacs 原始按键风味的同时，尽量少按修饰键，减少左手小指的疲劳。
+
+
+#### <span class="section-num">3.15.4</span> meow {#meow}
+
+[Modular Emacs On Wish](https://github.com/DogLooksGood/meow) 声称其「配置少，集成度优秀，记忆最少键位可以干最多的事」。
+
+
+#### <span class="section-num">3.15.5</span> modalka {#modalka}
+
+[modalka](https://github.com/mrkkrp/modalka) 只提供 modal 框架，你可以完全设定你自己的 modal 键位，打造专属于你的贴手 modal。
+
+
+#### <span class="section-num">3.15.6</span> Hydra {#hydra}
+
+[hydra](https://github.com/abo-abo/hydra) 更接近于「功能菜单」：弹出一个「常用功能列表」，你可以用连续击键来连续触发若干个函数。
+
+> 我曾经用它写过一个 [窗口管理工具包](https://github.com/nykma/nema/blob/6a9214f761b611b4722954d5f36875801f3435db/nema/nema-hydra.el) ，但自从用了 [edwina](https://github.com/ajgrf/edwina) 后它就没用了……
 
 [^fn:1]: 向下搜索本 buffer，到 buffer 末尾后会返回开头继续搜。反向动作（向上搜索）是 `(search-backward)` （默认 `C-r` ）
