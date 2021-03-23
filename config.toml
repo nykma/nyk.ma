@@ -500,10 +500,11 @@ enableEmoji = true
         siteID = "cttmflON"
         limit = 5
         height = "200"
-        color = ""
+        color = "59c5ec"
         colorful = true
         dislikes = false
         outlined = true
+        dark = true
       # Commento comment config (https://commento.io/)
       # Commento comment 评论系统设置 (https://commento.io/)
       [params.page.comment.commento]
