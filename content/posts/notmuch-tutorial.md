@@ -1,17 +1,17 @@
-+++
-title = "notmuch 及周边工具配置指南"
-author = ["Nyk Ma <i@nyk.ma>"]
-date = 2020-05-07
-lastmod = 2020-05-07T16:00:26+08:00
-tags = ["mail"]
-categories = ["tutorial"]
-draft = false
-+++
+---
+title: "notmuch 及周边工具配置指南"
+author: ["Nyk Ma <i@nyk.ma>"]
+date: 2020-05-07
+lastmod: 2021-04-17T16:59:25+08:00
+tags: ["mail"]
+categories: ["tutorial"]
+draft: false
+---
 
 > aka 当我收发邮件的时候我在做什么
 
 
-## You don't need this {#you-don-t-need-this}
+## <span class="section-num">1</span> You don't need this {#you-don-t-need-this}
 
 如果你搜到了这篇文章，听我一句劝，哪怕你再对标签式邮件数据库、CLI MUA 或者黑客 style 感兴趣，放下你的好奇心，去装个 Thunderbird 用吧。人家要弹性有弹性要易用有易用，什么 edge case 都考虑到了，比自己折腾的强百倍不止……
 
@@ -26,7 +26,7 @@ draft = false
 上述理由至少满足两条才有折腾本文的价值，否则去下载 Thunderbird 吧。
 
 
-## 啥是 email {#啥是-email}
+## <span class="section-num">2</span> 啥是 email {#啥是-email}
 
 邮件
 : 一个文本文件，格式由 [RFC5322](https://tools.ietf.org/html/rfc5322) 定义。
@@ -45,26 +45,25 @@ draft = false
 发
 : SMTP 协议（[RFC821](https://tools.ietf.org/html/rfc821)）。
 
-> 不仅客户端和服务器之间是 SMTP ，服务器和服务器之间也是 SMTP。
-> 比如从 `@gmail.com` 发送到 `@yahoo.com` 的邮件是由 Gmail 和 Yahoo 的邮件服务器之间通信转手的。
+> 不仅客户端和服务器之间是 SMTP ，服务器和服务器之间也是 SMTP。比如从 `@gmail.com` 发送到 `@yahoo.com` 的邮件是由 Gmail 和 Yahoo 的邮件服务器之间通信转手的。
 
 
-## 邮件客户端做了啥 {#邮件客户端做了啥}
+## <span class="section-num">3</span> 邮件客户端做了啥 {#邮件客户端做了啥}
 
 以 Thunderbird 为例，先搞清楚一体化方案做了什么，我们才能拆分任务、逐个实现。
 
 
-### TB：看 {#tb-看}
+### <span class="section-num">3.1</span> TB：看 {#tb-看}
 
 TB 有 web 引擎以正确地渲染 HTML 正文的邮件。
 
 
-### TB：写 {#tb-写}
+### <span class="section-num">3.2</span> TB：写 {#tb-写}
 
 简单地说，只需要一个文本编辑器。不过 Thunderbird 能让我们在 Body 部分 WYSIWYG 地排版 HTML 型邮件。同时 TB 还有地址本功能，方便我们快速补全 `To:`  部分。地址本的数据源来自已有邮件以及 LDAP 服务器（若已配置）。
 
 
-### TB：管理 {#tb-管理}
+### <span class="section-num">3.3</span> TB：管理 {#tb-管理}
 
 TB 通过 IMAP 下载了服务器端的邮件目录结构并压缩到本地的一个个 `.mbox` 文件里。
 
@@ -75,26 +74,26 @@ TB 通过 IMAP 下载了服务器端的邮件目录结构并压缩到本地的�
 另外 TB 建立了所有邮件的全文索引。
 
 
-### TB：收 {#tb-收}
+### <span class="section-num">3.4</span> TB：收 {#tb-收}
 
 TB 实现了 IMAP 协议的客户端，定期向服务器同步邮件，下载和上传不同的部分，并归档到 mbox 里。
 
 
-### TB：发 {#tb-发}
+### <span class="section-num">3.5</span> TB：发 {#tb-发}
 
 TB 实现了 SMTP 协议的客户端，向 `From:` 里指定的服务器发送邮件请求。
 
 
-## 那么动手吧 {#那么动手吧}
+## <span class="section-num">4</span> 那么动手吧 {#那么动手吧}
 
 我们把环节拆分开，每一环都可以单独调试或者替换为其他方案，这是 Unix “组合小工具”哲学的优势，也是我折腾这套方案的原因。
 
 
-### 写 {#写}
+### <span class="section-num">4.1</span> 写 {#写}
 
 这个最简单。打开一个顺手的编辑器，粘贴以下文本：
 
-```sh
+```mail
 From: Alice <alice@example.com>
 To: Bob <bob@example.com>
 Subject: Hello from Alice
@@ -107,7 +106,7 @@ This is a test mail from Alice. Hello Bob!
 我是认真的。这（几乎）就是一封 valid 的 Email。
 
 
-### 发 {#发}
+### <span class="section-num">4.2</span> 发 {#发}
 
 先搞发送部分，模块依赖少，测试简单。
 
@@ -174,7 +173,7 @@ $ cat test_mail.txt | msmtp --read-envelope-from -t
 这就是发邮件的全部了。
 
 
-### 收 {#收}
+### <span class="section-num">4.3</span> 收 {#收}
 
 现在 IMAP 协议是唯一的选择，让 POP 躺在博物馆里吧。
 
@@ -229,8 +228,7 @@ Patterns *
 SyncState *
 ```
 
-现在本地文件夹是空的，所以执行“同步”不会弄乱服务器上的东西，是个纯下载行为。
-所以调试配置时只要删掉 `~/.mail/alice` ，就可以放心地重新同步。
+现在本地文件夹是空的，所以执行“同步”不会弄乱服务器上的东西，是个纯下载行为。所以调试配置时只要删掉 `~/.mail/alice` ，就可以放心地重新同步。
 
 ```bash
 # 参数是 Channel 名
@@ -242,7 +240,7 @@ mbsync alice
 服务器上找一个有邮件的文件夹，然后本地打开对应的 `cur` 文件夹，你应该能看到很多小文件，每个文件就是一个邮件，你可以 `cat` 任意一个。
 
 
-### 管理 {#管理}
+### <span class="section-num">4.4</span> 管理 {#管理}
 
 我们先说说上面这个“每封邮件一个文件”（Maildir）这个本地方案相比 TB 的“每个文件夹一个文件”（mbox）方案好在哪儿：
 
@@ -274,9 +272,7 @@ mbsync alice
         </p>
         </details>
 
-那么，理论上说，邮件管理软件只要能方便地 `mv` 文件就行了。已经有很多软
-件能做到了， `mutt` 和 `sup` 都支持 Maildir。如果你看完下面 notmuch 的
-介绍后不感兴趣，完全可以换别的软件。
+那么，理论上说，邮件管理软件只要能方便地 `mv` 文件就行了。已经有很多软件能做到了， `mutt` 和 `sup` 都支持 Maildir。如果你看完下面 notmuch 的介绍后不感兴趣，完全可以换别的软件。
 
 notmuch 和上面这些的思路不同在于，它是一个完全独立于 Maildir 外的
 \*\*Tag 数据库\*\*。它是、且只是一个数据库，用来给邮件打 tag，不多不少。
@@ -294,16 +290,13 @@ notmuch 和上面这些的思路不同在于，它是一个完全独立于 Maild
 
 简单地说就是“数据库与文件解耦”，可以让你更加专注于内容本身而不用关心文件的状态或位置。
 
-所以 notmuch 的正确用法不是「手动给每个邮件标tag」，而应该使用脚本帮我
-们自动打 Tag，以及根据一个邮件 Tag 的状态决定这个邮件应该如何被更名或
-移动。notmuch 的弹性使得自动化脚本有实现的可能，自动化脚本使 notmuch
+所以 notmuch 的正确用法不是「手动给每个邮件标tag」，而应该使用脚本帮我们自动打 Tag，以及根据一个邮件 Tag 的状态决定这个邮件应该如何被更名或移动。notmuch 的弹性使得自动化脚本有实现的可能，自动化脚本使 notmuch
 的数据库真正有使用价值。这个自动化脚本叫 `afew` ，下面详述。
 
 
-#### 建立 Tag 数据库： `notmuch` {#建立-tag-数据库-notmuch}
+#### <span class="section-num">4.4.1</span> 建立 Tag 数据库： `notmuch` {#建立-tag-数据库-notmuch}
 
-先把 notmuch 装起来。然后 `notmuch setup` ，此时会有一个简单的 wizard 询问邮件路径在哪儿、你的常用邮件地址等。
-这些都可以事后在 `~/.notmuch-config` 里手动改。
+先把 notmuch 装起来。然后 `notmuch setup` ，此时会有一个简单的 wizard 询问邮件路径在哪儿、你的常用邮件地址等。这些都可以事后在 `~/.notmuch-config` 里手动改。
 
 如果你使用了我上面的示例收件配置，邮件路径应该是 `~/.mail` 。下面的描述也使用这个配置。
 
@@ -315,8 +308,7 @@ notmuch 注重建立 / 刷新数据库的速度。对我而言，上万封邮件
 
 每次收到新邮件 / 更新邮件文件状态后都要执行一遍 `notmuch new` 增量式地刷新数据库。
 
-如上所说， notmuch 是完全独立于 Maildir 之外的。
-任何时候更新数据库（甚至删除 `~/.mail/.notmuch` 并重建数据库）对当前邮件的状态都是无改动的。
+如上所说， notmuch 是完全独立于 Maildir 之外的。任何时候更新数据库（甚至删除 `~/.mail/.notmuch` 并重建数据库）对当前邮件的状态都是无改动的。
 
 这时就可以快速花式搜索邮件了。 `notmuch help search` 给了一些 sample，建议都试一遍，不过它需要搭配一个前端才能更好地发挥价值。
 
@@ -331,7 +323,7 @@ notmuch 注重建立 / 刷新数据库的速度。对我而言，上万封邮件
 > 记住这个加号和减号的操作方法，这个用法会贯穿所有的使用场景。
 
 
-#### 自动化 Tag 流程： `afew` {#自动化-tag-流程-afew}
+#### <span class="section-num">4.4.2</span> 自动化 Tag 流程： `afew` {#自动化-tag-流程-afew}
 
 我们知道一个新邮件在被 `notmuch new` 之后，Tag 只有 `new` 一个[^fn:1]。 这显然不方便我们未来的搜索及自动化。
 
@@ -394,13 +386,11 @@ spam_tag = 'junk'
 ```
 
 
-#### 自动移动邮件至其它文件夹： `afew` {#自动移动邮件至其它文件夹-afew}
+#### <span class="section-num">4.4.3</span> 自动移动邮件至其它文件夹： `afew` {#自动移动邮件至其它文件夹-afew}
 
-notmuch 标签数据库只能自嗨，你难免会用个手机 / web 邮件客户端之类的。
-要是一登上去发现所有邮件还是躺在 INBOX 里，总是感觉不爽的。
+notmuch 标签数据库只能自嗨，你难免会用个手机 / web 邮件客户端之类的。要是一登上去发现所有邮件还是躺在 INBOX 里，总是感觉不爽的。
 
-这时我们希望根据邮件当前标签移动至不同的 maildir，这样至少能在线上看到
-一个干净的 INBOX ……
+这时我们希望根据邮件当前标签移动至不同的 maildir，这样至少能在线上看到一个干净的 INBOX ……
 
 ```toml
 # ~/.config/afew/config
@@ -429,17 +419,17 @@ alice/Sent = 'NOT tag:sent':alice/INBOX
 使用 `afew -m` 来执行移动操作，再使用上面[收](#收)环节的命令和服务器同步邮件移动的结果。
 
 
-### 看 {#看}
+### <span class="section-num">4.5</span> 看 {#看}
 
 简单地说，我们需要一个「（至少能）正确渲染邮件纯文本部分的查看器」，如果能无缝衔接 notmuch 的 tag 设计思路是最好。这里提两个前端：
 
 
-#### `alot` {#alot}
+#### <span class="section-num">4.5.1</span> `alot` {#alot}
 
 [alot](https://github.com/pazz/alot) 是 `afew` 的姊妹项目（咦），类 vim 操作，用 `\` 呼出 search prompt。
 
 
-#### `notmuch-emacs` {#notmuch-emacs}
+#### <span class="section-num">4.5.2</span> `notmuch-emacs` {#notmuch-emacs}
 
 <https://notmuchmail.org/notmuch-emacs/>
 
@@ -498,12 +488,11 @@ alice/Sent = 'NOT tag:sent':alice/INBOX
     -   撤销 `C-c C-k`
 
 
-### 我的日常使用流程 {#我的日常使用流程}
+### <span class="section-num">4.6</span> 我的日常使用流程 {#我的日常使用流程}
 
 1.  移动邮件、与服务器同步、新邮件建立数据库： `afew -m; mbsync -a; notmuch new`
 
-    > 因为上文已经给 `notmuch new` 加了 hook ，这里不需要再 `afew -tn` 了。
-    > 其实 `mbsync -a` 和 `afew -m` 环节都可以放到 notmuch 的 hook 里
+    > 因为上文已经给 `notmuch new` 加了 hook ，这里不需要再 `afew -tn` 了。其实 `mbsync -a` 和 `afew -m` 环节都可以放到 notmuch 的 hook 里
 
 2.  在 emacs 里读、写、回、改标签
 3.  再次执行 1，把改动写回服务器
@@ -512,15 +501,15 @@ alice/Sent = 'NOT tag:sent':alice/INBOX
 `mbsync -a; notmuch new` 开始工作了。
 
 
-## FAQ {#faq}
+## <span class="section-num">5</span> FAQ {#faq}
 
 
-### 收：我只想收特定文件夹 {#收-我只想收特定文件夹}
+### <span class="section-num">5.1</span> 收：我只想收特定文件夹 {#收-我只想收特定文件夹}
 
 看下面一个问题的 `.mbsync` 例子。
 
 
-### 收：为什么文件夹乱码了？ {#收-为什么文件夹乱码了}
+### <span class="section-num">5.2</span> 收：为什么文件夹乱码了？ {#收-为什么文件夹乱码了}
 
 臭名昭著的 UTF-7 编码，所有 \*nix MUA 绕不过去的痛……
 
@@ -544,31 +533,31 @@ SyncState *
 这样本地文件夹名就是 `Archive` 了
 
 
-### 收：能更快点嘛？ {#收-能更快点嘛}
+### <span class="section-num">5.3</span> 收：能更快点嘛？ {#收-能更快点嘛}
 
 理论上来说你可以一口气起多个 `mbsync` 实例同时收不同的 Channel，只要你把 Channel 拆得很碎（比如一个文件夹一个 channel），
 
 > 事实上最佳实践就是「一个文件夹一个 Channel」。不仅颗粒度小易于管理，也是上文「文件夹乱码」所必须的……
 
 
-### 看：我觉得 `mutt` 更顺手，我能搭配使用 `notmuch` 嘛？ {#看-我觉得-mutt-更顺手-我能搭配使用-notmuch-嘛}
+### <span class="section-num">5.4</span> 看：我觉得 `mutt` 更顺手，我能搭配使用 `notmuch` 嘛？ {#看-我觉得-mutt-更顺手-我能搭配使用-notmuch-嘛}
 
 [当然可以](https://notmuchmail.org/notmuch-mutt/)。
 
 
-### 写：地址簿？ {#写-地址簿}
+### <span class="section-num">5.5</span> 写：地址簿？ {#写-地址簿}
 
 notmuch 自带一个 [address 补全引擎](https://notmuchmail.org/emacstips/#index13h2)，数据源就是你所有的邮件。
 
 
-### 管理：我有两台电脑，notmuch 数据库需要同步 {#管理-我有两台电脑-notmuch-数据库需要同步}
+### <span class="section-num">5.6</span> 管理：我有两台电脑，notmuch 数据库需要同步 {#管理-我有两台电脑-notmuch-数据库需要同步}
 
 > 比如我在台式机上给邮件打的标签，在笔记本上看不到。因为两台电脑数据库是独立的。
 
 请看 [muchsync](http://www.muchsync.org/) 项目。它使用一主多从的设计结构，client 几乎照搬 server 端 `~/.mail` 的状态。
 
 
-### 收：我还是觉得配置太麻烦，我想更简单点 {#收-我还是觉得配置太麻烦-我想更简单点}
+### <span class="section-num">5.7</span> 收：我还是觉得配置太麻烦，我想更简单点 {#收-我还是觉得配置太麻烦-我想更简单点}
 
 如果你只使用 Gmail ，有一个非常棒的后起之秀： [gauteh/lieer](https://github.com/gauteh/lieer)
 
