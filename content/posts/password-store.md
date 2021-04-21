@@ -1,11 +1,11 @@
----
-title: "pass : 密码管理本不复杂"
-author: ["Nyk Ma"]
-date: 2021-04-21T00:14:00+08:00
-lastmod: 2021-04-21T00:14:36+08:00
-categories: ["software"]
-draft: false
----
++++
+title = "pass : 密码管理本不复杂"
+author = ["Nyk Ma"]
+date = 2021-04-21T00:14:00+08:00
+lastmod = 2021-04-21T15:20:23+08:00
+categories = ["software"]
+draft = false
++++
 
 ## 前言 {#前言}
 
@@ -121,27 +121,18 @@ draft: false
 
 考虑到手动编辑此文件的便利性，就 YAML 好了。YAML 是「手动编辑」和「程序处理」的折衷。
 
-<div class="admonition">
-  <div></div>
-
+{{< admonition note "为什么一定得是文本文件？" >}}
 当然不是「一定」，只是考虑到「密码管理器」场景里 90% 的信息是文本，那把条目 base 在 plain text 格式最自然。
+{{< /admonition >}}
 
-</div>
-
-<div class="admonition">
-  <div></div>
-
+{{< admonition note "这样一来字段里不是只能存文本？" >}}
 -   整个文件是二进制：直接把整个文件使用 GPG 加密。
 -   条目里某个字段是二进制： `base64` 。
+{{< /admonition >}}
 
-</div>
-
-<div class="admonition">
-  <div></div>
-
+{{< admonition note "条目的「别名」？" >}}
 更简单了，symlink 嘛。
-
-</div>
+{{< /admonition >}}
 
 
 ### 生成密码 {#生成密码}
@@ -166,9 +157,7 @@ draft: false
 
 等等，这不就是 `git` 么……
 
-<div class="admonition">
-  <div></div>
-
+{{< admonition note "git 对此场景的简单适配" >}}
 -   怎么 `diff`
 
     我们都知道 repo 根目录里的 `.gitattribute` 文件可以让 git 使用指定的外部程序来「解包」一个文件。
@@ -192,8 +181,7 @@ draft: false
 -   怎么看历史版本 / 回滚
 
     这……git 客户端你总有一个的吧……？
-
-</div>
+{{< /admonition >}}
 
 
 ### 加分项的解决 {#加分项的解决}
@@ -249,6 +237,31 @@ draft: false
 -   `pass git push` 等同于 `cd ~/.password-store && git push`
 
 
+## `pass` 的最佳实践 {#pass-的最佳实践}
+
+
+### 条目名 {#条目名}
+
+完整路径里体现出 `网站URL/登录用户名` 足矣。
+
+由于 `pass` 使用目录结构管理条目树的增删改查，条目命名的科学性直接影响使用体验。
+
+
+### 条目结构 {#条目结构}
+
+密码文件的参考结构如下：
+
+```yaml
+密码
+login: 用户名
+url: 网站 URL
+# 其它字段
+otpauth://xxxxxxx # TOTP URI
+```
+
+这个结构几乎被以下所有[生态补充工具](#pass-生态的补充工具)兼容。你可以按需添加其它字段，只要自己记得就行。
+
+
 ## `pass` 生态的补充工具 {#pass-生态的补充工具}
 
 以下工具均可在官网 [Extensions](https://www.passwordstore.org/#extensions) 一章找到。
@@ -268,12 +281,9 @@ draft: false
 
 ### OTP {#otp}
 
-<div class="admonition">
-  <div></div>
-
+{{< admonition note "三思！" >}}
 把密码和 OTP secret key 保存在一起有悖「二次验证」的目的！
-
-</div>
+{{< /admonition >}}
 
 [pass-otp](https://github.com/tadfisher/pass-otp#readme) 项目可以读写 `otpauth://` 开头的 URI。
 
@@ -316,6 +326,14 @@ Android
     它自带 git 功能，GPG 功能通过外部 app （比如 [OpenKeychain](https://play.google.com/store/apps/details?id=org.sufficientlysecure.keychain)）提供，更加灵活。全程如预期。
 
     它也支持 OTP 。
+
+
+### `pass` 的其它实现： `gopass` {#pass-的其它实现-gopass}
+
+[gopass](https://github.com/gopasspw/gopass) 是用 golang 实现的 `pass` 的超集，提供了很多增强功能，诸如多 repo、守护进程（API server）用以和浏览器插件通信、更改加密后端、
+REPL 的 CLI 等。
+
+我个人感觉没必要， `pass` 的完成度正正好，功能多了就过了。读者自己按需使用吧。
 
 
 ## 结论 {#结论}
