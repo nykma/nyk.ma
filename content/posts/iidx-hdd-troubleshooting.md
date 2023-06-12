@@ -1,15 +1,13 @@
 +++
 title = "IIDX 好弟弟排错指南"
 author = ["Nyk Ma"]
-date = 2023-01-03
-lastmod = 2023-06-09T16:44:57+08:00
+date = 2023-06-09T16:44:00+08:00
+lastmod = 2023-06-12T18:10:10+08:00
+categories = ["game"]
 draft = false
 +++
 
-## <span class="org-todo done DONE">DONE</span> IIDX 好弟弟排错指南 <span class="tag"><span class="_game">@game</span></span> {#iidx-hdd-troubleshooting}
-
-
-### 前言 {#前言}
+## 前言 {#前言}
 
 本文会大量使用黑话，因为整个行业本身处于灰色地带。请窒息。
 
@@ -76,6 +74,8 @@ DirectAudio 初始化失败导致设备指针为空，再被 `bm2dx.dll` 里的�
 
 
 #### Omnibus + `9on12` 导致的 {#omnibus-plus-9on12-导致的}
+
+我的 Omnibus 使用了[文件系统注入](https://github.com/mon/ifs_layeredfs)，它使用 `d3d9.dll` 作为注入点，然而我同时选了 `config.exe` 里的 `DX9on12` ，这两个注入冲突了。好在没多久就找到原因了，也是看 log 找到的。
 
 
 ### 显示类 {#显示类}
