@@ -2,7 +2,7 @@
 title = "Emacs 自力求生指南 ── 来写自己的配置吧"
 author = ["Nyk Ma"]
 date = 2020-10-03T15:41:00+08:00
-lastmod = 2021-03-22T17:57:38+08:00
+lastmod = 2023-10-11T18:24:21+08:00
 tags = ["emacs"]
 categories = ["tutorial"]
 draft = false
@@ -503,7 +503,7 @@ Leader key 敲完后停一会儿也会弹出帮助菜单。
 当然， `ivy` 社区也有对应的工具，一搜就能搜到。
 
 
-#### <span class="section-num">3.8.2</span> buffer 内搜索： `ctrlf` 和 `helm-swoop` {#buffer-内搜索-ctrlf-和-helm-swoop}
+#### <span class="section-num">3.8.2</span> buffer 内搜索： `ctrlf` 和 `helm-swoop` <span class="tag"><span class="ATTACH">ATTACH</span></span> {#buffer-内搜索-ctrlf-和-helm-swoop}
 
 Emacs 自带一个快速关键词搜索： `(search-forward)` （默认 `C-s`&nbsp;[^fn:1]），但功能太简陋了。
 
@@ -543,7 +543,7 @@ Emacs 自带一个快速关键词搜索： `(search-forward)` （默认 `C-s`&nb
 ```
 
 
-#### <span class="section-num">3.8.3</span> 可视范围内跳转： `avy` {#可视范围内跳转-avy}
+#### <span class="section-num">3.8.3</span> 可视范围内跳转： `avy` <span class="tag"><span class="ATTACH">ATTACH</span></span> {#可视范围内跳转-avy}
 
 一种更高频的跳转：你眼睛盯着屏幕上的一个关键词，要把光标跳到那儿去编辑。
 
@@ -712,6 +712,13 @@ Emacs GUI 完整支持 Unicode，对字体定义的精细度极高，颗粒度�
 
 > 通过组合以下函数，我[自己写了一套设置字体的流程](https://github.com/nykma/nema/blob/develop/my-sample/font.el) 。
 
+<!--quoteend-->
+
+> 如果你遇到中英文字符对不齐的问题，通常有两种解决办法：
+>
+> 1.  中英文使用同一套字体，比如 \`Sarasa\` 系列
+> 2.  使用 [cnfonts](https://github.com/tumashu/cnfonts) 包，它会像素级地对齐字符的 box，让中英混排的 org 表格线不错位。另外该包也能分别设置中英文字体。
+
 
 #### <span class="section-num">3.11.1</span> `(font-spec :family "xxx" :height 12)` {#font-spec-family-xxx-height-12}
 
@@ -756,14 +763,14 @@ Emacs GUI 完整支持 Unicode，对字体定义的精细度极高，颗粒度�
 ```
 
 
-#### <span class="section-num">3.11.4</span> <kbd>C-u C-x =</kbd> {#c-u-c-x}
+#### <span class="section-num">3.11.4</span> <kbd>C-u C-x =</kbd> <span class="tag"><span class="ATTACH">ATTACH</span></span> {#c-u-c-x}
 
 查看当前光标下的字是什么，以及使用了哪个字体。
 
 {{< figure src="/ox-hugo/2021-03-22_15-50.png" >}}
 
 
-#### <span class="section-num">3.11.5</span> `(helm-select-xfont)` {#helm-select-xfont}
+#### <span class="section-num">3.11.5</span> `(helm-select-xfont)` <span class="tag"><span class="ATTACH">ATTACH</span></span> {#helm-select-xfont}
 
 浏览、搜索所有字体。用 <kbd>C-j</kbd> 可以预览 + 拷贝字体名进 kill ring。
 
