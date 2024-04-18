@@ -2,7 +2,7 @@
 title = "Nix 和 NixOS：你们安利方法错了"
 author = ["Nyk Ma"]
 date = 2023-11-21
-lastmod = 2023-11-21T23:47:28+08:00
+lastmod = 2024-04-18T15:39:24+08:00
 categories = ["software"]
 draft = false
 +++
@@ -140,6 +140,58 @@ nix 并不完美，但目前看来，它无疑是全 Linux 生态圈里方向最
 ## 和其它类似物的比较 {#和其它类似物的比较}
 
 其实不是很类似。
+
+
+### dotfile 管理器 {#dotfile-管理器}
+
+如果只把 Nix 当软件包管理器用，那它是 dotfile manager 的上位替代。
+
+我们先看看 dotfile manager 的问题：
+
+-   如果 dotfile 只负责 `ln` 配置文件，那在不同电脑间共用同一套配置会特别死板
+    -   同一个配置文件在两台电脑间需要改动 5%，能怎么改
+        -   像 `fish` 那样能把配置拆成 `conf.d/*.fish` 碎片的还好说，不能拆配置的软件怎么办。
+    -   新配了一台电脑，你得判断 `ln` 哪几个碎片
+-   如果 dotfile 管理器有类似字符串注入 / template 的功能，那问题又来了：它的弹性有多大？
+    -   template 内置了哪些控制流函数？能满足我需要吗？
+    -   能执行 shell 命令拿返回值再注入吗？
+    -   shell 命令能确保在两台电脑都能跑成功吗？
+
+Nix 则完全没有这些问题：
+
+-   信息源很灵活：
+    -   你的系统环境（Linux 还是 darwin ，x64 还是 arm64）
+    -   对该软件的直接配置 （比如 `programs.atuin.settings.sync_frequency = "5m"` ）
+    -   别的软件的配置（见下）
+    -   别的软件的注入（比如非常多的 CLI 工具都会注入你 shell 的 completion）
+-   所有字段均可动态求值
+    -   和 Emacs 优点一样，可以引用别的配置的值来注入或做判断：
+        ```nix
+        services.gitea.repositoryRoot = "${config.services.gitea.stateDir}/repositories";
+        ```
+    -   当然更高阶的控制流也不在话下：
+        ```nix
+        # home-manager/modules/manual.nix
+        config = {
+          home.packages = mkMerge [ # 也就是 flatMap
+            (mkIf cfg.html.enable [ docs.manual.html docs.manual.htmlOpenTool ])
+            (mkIf cfg.manpages.enable [ docs.manPages ])
+            (mkIf cfg.json.enable [ docs.options.json ])
+          ];
+        };
+        ```
+-   几乎不需要执行 shell 拿系统信息，因为系统的状态被当前 Nix 配置树完全定义了，你要做的是找到定义这个信息的 key ，取它的 value 即可继续做操作。
+    -   连网卡名字都可以先验地定义。参见：
+        -   [networking.usePredictableInterfaceNames](https://search.nixos.org/options?channel=unstable&show=networking.usePredictableInterfaceNames&from=0&size=50&sort=relevance&type=packages&query=usePredictable)
+        -   <https://mynixos.com/nixpkgs/option/networking.interfaces.%3Cname%3E.name>
+        -   <https://discourse.nixos.org/t/network-interface-names-in-nixos-configuration/15200>
+    -   分区也可以先验地定义。参见： <https://github.com/nix-community/disko>
+-   作为保底手段，你依然还是可以自己提供全量的配置文件本身。
+
+最后 Nix 把求值后的配置「DOM」给「渲染」成文本的配置文件，打包为一个
+Derivation 后， 用类似 OverlayFS 的方式把它放进它该在的地方。
+
+这才是 dotfile 管理该有的样子。未来你有信心无惧部署新机器。
 
 
 ### Docker / podman 容器 {#docker-podman-容器}
