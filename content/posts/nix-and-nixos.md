@@ -2,7 +2,7 @@
 title = "Nix 和 NixOS：你们安利方法错了"
 author = ["Nyk Ma"]
 date = 2023-11-21
-lastmod = 2024-04-18T15:39:24+08:00
+lastmod = 2024-06-25T00:40:24+08:00
 categories = ["software"]
 draft = false
 +++
@@ -38,16 +38,14 @@ NixOS 对用户的卖点根本不是什么「可复现」（ `docker` 和 `k8s` 
 `systemd` 服务、防火墙、shell 注入、GUI 菜单注册之类的全考虑进去，目前几乎做到了「只要系统状态有解，那系统就能正常使用」。这个信心以前只有
 Rust 能给我。
 
-读者应该体验过 ubuntu `do-release-upgrade` 升级到一半报错退出了的那种尴尬吧，这时候系统处于非常不稳定的薛定谔态，重启也不是，不重启也不是，再来一遍 `do-release-upgrade` 也不是。在 NixOS 里，别说软件包了，就连内核 module 甚至内核本身我都是想切就切的，成功了说明能用，不成功不会影响现在的系统。
+你的每一次「系统更新」，实际上都是把整个系统的依赖树和配置从零开始完全构建一遍，再把整个系统的状态树「替换」为当前版本的结果。
 
--   例子：Steam 的 `remotePlay.openFirewall = true;`
--   例子：完全搞砸也能救：
+-   只要是 Nix 管理的文件，运行时被删除了都没事，哪怕把 `/boot` 删了都没事， `nixos-build switch` 一遍就又被拷贝回来了
+    -   NixOS 是可以把整个 root 给 mount 到 tmpfs 上的
+    -   完全进不去系统了也没事，U 盘启动一个 NixOS ，用你的系统配置再做一遍 `nixos-install` 就行
+-   系统更新一半取消了也没事，因为还没到最后「替换」系统根节点的那一步。只有最后这一步是原子的。有点像日志型文件系统。
 
-> Rerunning the installer will create a new generation but not touch any
-> user data. This means you can "undo" the installation by selecting a
-> previous generation in the bootloader. To redo the installation
-> without changing your root password or changing the version of
-> Nixpkgs, run: `nixos-install --no-root-password --no-channel-copy`
+    > 读者应该体验过 ubuntu `do-release-upgrade` 升级到一半报错退出了的那种尴尬吧，这时候系统处于非常不稳定的薛定谔态，重启也不是，不重启也不是，再来一遍 `do-release-upgrade` 也不是。在 NixOS 里，别说软件包了，就连内核 module 甚至内核本身我都是想切就切的，成功了说明能用，不成功不会影响现在的系统。
 
 
 ### Nix flake：给你完整的“时光机”体验 {#nix-flake-给你完整的-时光机-体验}
@@ -79,13 +77,11 @@ Rust 能给我。
 `asdf` `rtx` `virtualenv` `rustup` 显得很没必要。
 
 开发环境除了打镜像外几乎不需要 `docker` 。用上文的 `nix flake init
---template=xxx` 创建的开发环境比 Docker 好非常多，比如上文说的“时光机”就是一个非常不可替代的 killer feature，这是 Docker 都无法保证的。
+--template=xxx` 创建的开发环境比 Docker 好非常多：
 
-
-### <span class="org-todo todo TODO">TODO</span> 全局计算完整系统状态：残留垃圾最少 {#全局计算完整系统状态-残留垃圾最少}
-
--   配置文件的残留问题
--   统一软件包依赖导致的重复问题
+-   比如上文说的“时光机”就是一个非常不可替代的 killer feature，这是
+    Docker 都无法保证的。
+-   在项目里定义的依赖被确保的同时，每个人自己的个性化配置依然能得以保留（如 Shell 配置），不像 Docker 镜像内开发还是和宿主机隔着一层「膜」（通常是 `ssh` ）。
 
 
 ### 单发应用： `nix-shell` 用完即丢无负担 {#单发应用-nix-shell-用完即丢无负担}
@@ -116,25 +112,35 @@ nix 并不完美，但目前看来，它无疑是全 Linux 生态圈里方向最
 > IPFS 的 CID。
 
 
-### NixOS 还是不能完整管理 systemd {#nixos-还是不能完整管理-systemd}
+### Nix 只负责到服务的单点 deploy，没有复杂的运行时 orchestra {#nix-只负责到服务的单点-deploy-没有复杂的运行时-orchestra}
 
-偶尔有些东西还是要手动 `systemctl enable`
+-   NixOS 部署服务端没办法替代 K8s 。Container orchestration 自动编排的体验目前 k8s 还是独一档。
 
--   例子 <https://github.com/nix-community/home-manager/blob/master/modules/services/blueman-applet.nix>
+    好在目前 Nix 打包一个 docker container 不仅非常容易，成品还极其精简：你可以做到镜像里连 busybox 都没有，也能变相减小攻击面。
 
-其实现在 systemd 这个位子给 nix 坐是最好，但奈何 systemd 还是相对更容易让传统 linux 用户接受些。
+> 参见 [dockerTools.buildLayeredImage](https://ryantm.github.io/nixpkgs/builders/images/dockertools/#ssec-pkgs-dockerTools-buildLayeredImage)
+
+-   NixOS 还是不能完整管理 systemd，偶尔有些东西还是要手动 `systemctl enable` 。
+    -   例子 <https://github.com/nix-community/home-manager/blob/master/modules/services/blueman-applet.nix>
 
 
-### 每个用户都有打包的义！务！ {#每个用户都有打包的义-务}
+### 每个用户都有打包的义务 {#每个用户都有打包的义务}
 
 小到给你自己的程序项目写 `flake.nix` ，中到 `override` 一个现有软件包以满足你自己需要，大到给社区贡献新 pkgs 定义，你在使用 Nix 的过程中几乎无法避免广义上的“打包”。
 
 不过好在，按照上文这个顺序练级，不算难。在接受了 Nix 的哲学后，理解起来会越来越顺畅。
 
 
-### 社区对「可复现」的追求过于病态了 {#社区对-可复现-的追求过于病态了}
+### 文档混乱 {#文档混乱}
 
-一个月前起草这篇文时我觉得这是缺点，但现在想想应该是优点。只有这样才能让 Nix 生态在未来保持健壮性。
+很遗憾，它非常需要文档（因为在操作系统应用里引入了太多新概念），但旧世代文档和新时代（flake）文档全混起来了，flake 用户经常 google 到旧世代版本的配置，直接贴进自己 nix 文件里就报错了，也很难查……
+
+哦，说到报错……
+
+
+### 报错信息不精确 {#报错信息不精确}
+
+没办法，FP 过于动态了，很多类似元编程的场景导致它很难给出精确的错误原因。
 
 
 ## 和其它类似物的比较 {#和其它类似物的比较}
@@ -185,7 +191,7 @@ Nix 则完全没有这些问题：
         -   [networking.usePredictableInterfaceNames](https://search.nixos.org/options?channel=unstable&show=networking.usePredictableInterfaceNames&from=0&size=50&sort=relevance&type=packages&query=usePredictable)
         -   <https://mynixos.com/nixpkgs/option/networking.interfaces.%3Cname%3E.name>
         -   <https://discourse.nixos.org/t/network-interface-names-in-nixos-configuration/15200>
-    -   分区也可以先验地定义。参见： <https://github.com/nix-community/disko>
+    -   硬盘分区也可以先验地定义。参见： <https://github.com/nix-community/disko>
 -   作为保底手段，你依然还是可以自己提供全量的配置文件本身。
 
 最后 Nix 把求值后的配置「DOM」给「渲染」成文本的配置文件，打包为一个
@@ -211,3 +217,48 @@ Derivation 后， 用类似 OverlayFS 的方式把它放进它该在的地方。
 事实上 Nix 确实可以（也已经）把其它程序语言的“包”纳入自己 Nixpkgs 的管辖范围内了，这个功能叫 Package Set。
 
 {{< figure src="/ox-hugo/nix-package-set.png" >}}
+
+
+## 我心动了，然后呢 {#我心动了-然后呢}
+
+我推荐你这么入门：
+
+-   首先你要学的是新世代的 Nix 标准，叫 nix flake，而不是老的 Nix 定义法
+    -   不是语法的差异，语法都是一样的。是对外部依赖和软件包定义的风格有变化。可以理解为换了一套约定俗成。
+    -   简单地说，如果你在文章里看到 `nix-xxx` 命令，说明这文章是老世代的。而 `nix xxx` 是新世代的
+    -   几乎所有教程都会建议你开启 `nix-command` 和 `flake` 这两个
+        experimental feature。打开了就是新世代了。建议直接从新世代入手
+-   先在虚拟机里装 NixOS
+    -   强烈推荐装 GUI 版的 NixOS，比如 KDE 的
+    -   搭配下面的参考连接，读懂官方提供的配置文件（在 `/etc/nixos` 里），尝试做一些简单的修改， `nixos-rebuild switch` 看效果是否如你预期
+    -   先别看 `home-manager` 或者 `agenix` 之类发里福笑的东西
+-   然后在你的工作机器上装 Nix 包管理器
+    -   先别格你的系统，我知道你很急但你先别急。慢慢打磨你的配置，之后想格盘装 NixOS 只要给你配置加个二三十行就能做到
+    -   尝试把你手头项目的依赖用 Nix 和 `direnv` 管理，尝试解决一下出现的问题
+    -   这时你有两个环境了，可以看看怎么重构配置、复用配置、分功能模块
+        module 了。重构配置是最大乐趣，和 Emacs 一样。
+    -   顺便可以看看 `home-manager` 在系统中的地位，它解决了什么问题，以及怎么用了
+    -   顺便可以看看如何在配置文件里安全地存储敏感数据了（比如用 `agenix` ）
+-   最后，万事俱备了，再格盘装 NixOS
+    -   此时你对你的配置该做何修改已经胸有成竹，游刃有余了
+-   最后的最后，你有强烈的欲望把自己手上的机器万物归宗到一套配置上去，你可以看 `nixos-anywhere` 、 `deploy-rs` 、 `disko` 之类的安装器和部署器了。
+
+
+## 参考链接 {#参考链接}
+
+
+### 教程 {#教程}
+
+官方教程就不说了
+
+-   <https://nixos-and-flakes.thiscute.world/zh/> 最好的中文教程
+
+
+### 文档 {#文档}
+
+官方文档就不说了
+
+-   [noogle.dev](https://noogle.dev) 所有内置函数的用法
+-   <https://ryantm.github.io/nixpkgs> 内置 `lib` 函数和各种语言的打包器用法介绍
+-   <https://mynixos.com> 所有 `nixpkgs` 、 `nixosConfigurations` 和
+    `hmConfigurations` 里能写的软件包和配置项搜索
