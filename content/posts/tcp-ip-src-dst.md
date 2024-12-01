@@ -1,7 +1,7 @@
 +++
 title = "四元组，路由与防火墙 —— 一个数据包的西游记"
 date = 2024-09-12
-lastmod = 2024-09-12T23:56:05+08:00
+lastmod = 2024-12-01T21:50:20+08:00
 tags = ["firewall", "homelab", "devops"]
 categories = ["network"]
 draft = false
@@ -367,3 +367,24 @@ IP 最后真的发到哪个服务器，完全可以让服务端来判断。
 {{< figure src="/ox-hugo/wireshark.png" link="/ox-hugo/wireshark.png" >}}
 
 接下来 filter 一个包你应该也心中有数了，只要想象一下你要抓的包的四元组长什么样，然后让 ChatGPT 告诉你就行。
+
+
+## 习题 {#习题}
+
+来解决实战问题练练手吧，不用会忘的。
+
+
+### mDNS 包放行 {#mdns-包放行}
+
+[mDNS](https://en.wikipedia.org/wiki/Multicast_DNS) (aka Bonjour) 的原理是，每台电脑用下面这个 UDP 包广播自己的 IP：
+
+|     | Address (IP)  | Port (UDP) |
+|-----|---------------|------------|
+| SRC | `（自己的 IP）` | `5353`     |
+| DST | `224.0.0.251` | `5353`     |
+
+1.  试着想想，路由器上的防火墙要在哪个表哪个链上设置什么规则以放行、禁止或
+
+者 log 这些包。
+
+1.  IPv6 版的 `DST IP` 是 `ff02::fb` ，同样想想在 v6 的 iptables 上要怎么设置
