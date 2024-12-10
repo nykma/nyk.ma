@@ -2,7 +2,7 @@
 title = "Nix 实战：来几个 use case"
 author = ["Nyk Ma"]
 date = 2024-12-11T01:06:00+08:00
-lastmod = 2024-12-11T01:06:11+08:00
+lastmod = 2024-12-11T01:34:39+08:00
 tags = ["nix"]
 categories = ["software"]
 draft = false
@@ -212,10 +212,11 @@ nixpkgs module 定义了一种函数的输入和输出结构。用在所有和 n
       imports = [
         # 想象上面说的「好似内容写在这里一样」
         import ./a.nix
-        import ./b.nix
-        # 注意这个函数被 imports 自动 call 了，并拿到了它的返回值
-        import ./c.nix
-        # 显然下面一行和 import 是等价的
+        # imports 是能处理相对路径的，所以一般来说这么写就可以了：
+        ./b.nix
+        # 注意下面文件里定义的函数会被 imports 自动 call 了，并取它的返回值
+        ./c.nix
+        # 当然你也可以现场定义。显然下面和 import 是等价的
         { config.users.users.nyk.homeMode = "755"; }
       ];
     }
