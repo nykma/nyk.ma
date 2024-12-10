@@ -2,7 +2,8 @@
 title = "Nix 和 NixOS：你们安利方法错了"
 author = ["Nyk Ma"]
 date = 2023-11-21
-lastmod = 2024-06-25T00:40:24+08:00
+lastmod = 2024-12-10T17:16:53+08:00
+tags = ["nix"]
 categories = ["software"]
 draft = false
 +++
